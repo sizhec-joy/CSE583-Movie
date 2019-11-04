@@ -85,14 +85,4 @@ Our dataset contains 5 main files:
 
 **Inputs it requires:** Cast, country, crew, category, company, budget, runtime etc.
 
-# **Outputs it provides:** Predicted rating and popularity of a movie based on input information. 
-
-# CSE583project-Group9
-
-# Test
-
-## TEST
-
-### TESTTTTT
-
-> > > > > > > 0b7d3e73e935b64e4c46f5cc73130810e4a62311
+**Outputs it provides:** Predicted rating and popularity of a movie based on input information. 
