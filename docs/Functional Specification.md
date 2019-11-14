@@ -26,22 +26,22 @@ Our dataset contains 5 main files:
 
 **The objective of the user interaction:** Get 5 movies he/she may like
 
--**For Demographic filtering:**
+- **For Demographic filtering:**
 
-  -**User input:** None
+  - **User input:** None
 
-  -**System output:** Recommended movies based on movie popularity. 
+  - **System output:** Recommended movies based on movie popularity. 
 
--**For Content based filtering:**
+- **For Content based filtering:**
 
-  -**User input:** genre, director, description, actors
+  - **User input:** genre, director, description, actors
 
-  -**System output:** Recommended movies based on movie popularity.
+  - **System output:** Recommended movies based on movie popularity.
 
 **For collaborative filtering:**
 
-  -**User input:** User id
+  - **User input:** User id
 
-  -**System output:** Recommended movies by user based filtering and item based filtering. For user-based recommendation, the system recommends movies to the user that similar users like. For item-based recommendation, the result is based on the similarity with the movies that the user rated. For new users without watching histories, the recommendation results will be based on movie popularity.
+  - **System output:** Recommended movies by user based filtering and item based filtering. For user-based recommendation, the system recommends movies to the user that similar users like. For item-based recommendation, the result is based on the similarity with the movies that the user rated. For new users without watching histories, the recommendation results will be based on movie popularity.
 
  ![img](https://lh6.googleusercontent.com/psmMhX9QqeuVIzc0xB1oQ6RQVeY7m1vMEfpCUGtHIJR8YFnngNikmWpV8QL4FJeccZDHql9XnTT7cc7RGblxL6m5weGGWdyMRbiXQjv3Kh843IJLLVnW7pSNMkPvWLico8tLUTO9).
