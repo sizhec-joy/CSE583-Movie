@@ -22,14 +22,7 @@ Our dataset contains 5 main files:
 
 **ratings.csv:** Contains 27,000,000 ratings and 1,100,000 tag applications applied to 58,000 movies by 280,000 users.Use cases. 
 
-#### Two use cases
-**Use Case 1:**
-
-**The objective of the user interaction:** Predicting rating and popularity of a movie based on input information
-
-**User input:** Cast, country, crew, category, company, budget, runtime etc.
-
-**System output:** Predicted movie rating/ popularity![img](https://lh6.googleusercontent.com/7_O8L3umIEhUBi2Fi-RUfoyYo_lNVgioHalad10Z_92NpjFSQUcHBOVlDxorDaXrcx7F41uA3AqMe6rv3uA8ClAD0ipNKMn4l5148yoekwurM4vTSNW01FkuxHZFWCbrLLMRYcs_)**Use case 2:**
+#### Use case
 
 **The objective of the user interaction:** Get 5 movies he/she may like
 
