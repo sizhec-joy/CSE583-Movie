@@ -34,7 +34,7 @@ Our dataset contains 5 main files:
 
 - **For Content based filtering:**
 
-  - **User input:** genre, director, description, actors
+  - **User input:** genre, year, country, director, actors
 
   - **System output:** Recommended movies based on movie popularity.
 
