@@ -38,7 +38,7 @@ Our dataset contains 5 main files:
 
   - **System output:** Recommended movies based on movie popularity.
 
-**For collaborative filtering:**
+- **For collaborative filtering:**
 
   - **User input:** User id
 
