@@ -23,7 +23,7 @@ from dash.dependencies import Input, Output, State
 
 from app import app
 import display_popularity
-import display_filter
+import display_content_base
 import display_recomm
 
 # we use the Row and Col components to construct the sidebar header
@@ -118,7 +118,7 @@ def render_page_content(pathname):
         return app_popularity_tab
     elif pathname == "/page-content-based-filtering":
         # return
-        app_filter_tab = display_filter.main()
+        app_filter_tab = display_content_base.main()
         return app_filter_tab
     elif pathname == "/page-collaborative-filtering":
         # return
@@ -134,8 +134,9 @@ def render_page_content(pathname):
     )
 
 
+display_popularity.call_back_popularity_filter()
+display_content_base.call_back_filter()
 display_recomm.call_back_recom()
-display_filter.call_back_filter()
 
 
 @app.callback(
