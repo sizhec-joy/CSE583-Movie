@@ -49,7 +49,7 @@ def add_popularity_filter():
 
     app_popularity_tab = html.Div(children=[])
     app_popularity_tab.children.append(html.Div(filter_drop_down, style={'margin-top': '50px'}))
-    filter_button_div = html.Div(html.Button(id='filter_button', children='Filter'),
+    filter_button_div = html.Div(html.Button(id='popularity_filter_button', children='Filter'),
                                  style={'margin-top': '50px',
                                         'margin-bottom': '100px',
                                         'width': '40%',
