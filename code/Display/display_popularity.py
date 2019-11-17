@@ -39,13 +39,13 @@ for val in country_set:
 count = 0
 for val in director_set:
     count = count + 1
-    if count > 100:
+    if count > grab_list.max_count:
         break
     director_val.append({'label': val, 'value': val})
 count = 0
 for val in actor_set:
     count = count + 1
-    if count > 100:
+    if count > grab_list.max_count:
         break
     actor_val.append({'label': val, 'value': val})
 

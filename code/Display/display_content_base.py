@@ -8,6 +8,7 @@ import numpy as np
 from app import app
 import display_final_movie
 import global_record
+import grab_list
 
 num_movie_rate = 8
 num_final_recommend = 10
@@ -17,9 +18,17 @@ colors = {
     'text': '#000080'
 }
 
-
-year_val = [{'label': 'All', 'value': 'All'}]
-year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1970, 2017, 1)])
+grab_list.read_csv()
+name_set = sorted(grab_list.name_set)
+name_val = []
+count = 0
+for val in name_set:
+    count = count + 1
+    if count > grab_list.max_count:
+        break
+    name_val.append({'label': val, 'value': val})
+#year_val = [{'label': 'All', 'value': 'All'}]
+#year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1970, 2017, 1)])
 
 
 def add_search_bar():
@@ -33,7 +42,7 @@ def add_search_bar():
                             'margin-bottom': '20px'}),
             html.Div(dcc.Dropdown(
                 id='movie_search_dropdown',
-                options=year_val,
+                options=name_val,
                 # multi=True,
                 placeholder="Please select/type a movie"))
         ]
@@ -80,4 +89,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

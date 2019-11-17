@@ -5,8 +5,12 @@ genre_set = {'Foreign'}
 country_set = {'United States of America'}
 director_set = {'Mervyn LeRoy'}
 actor_set = {'Sho Kosugi'}
+director_dic = {'Mervyn LeRoy': 0}
+actor_dic = {'Sho Kosugi': 0}
 name_set = {'Stagecoach'}
-
+max_count = 1000
+pop_director = 20
+pop_actor = 100
 
 def process_genre(row):
     substring = row['genres']
@@ -26,7 +30,8 @@ def process_name(row):
     index = 100000
     if substring is None:
         return
-    name_set.add(substring)
+    if len(substring) > 0 and substring[0].isalpha():
+        name_set.add(substring)
     
     
 def process_country(row):
@@ -55,7 +60,13 @@ def process_director(row):
     if director[0] == ' ':
         director = director[1:]
     if director is not None and director[0].isalpha():
-        director_set.add(director)
+        if director in director_dic:
+            director_dic[director]  = director_dic[director] + 1;
+            if director_dic[director] > pop_director:
+                director_set.add(director)
+        else:
+            director_dic[director] = 1
+        
 
 def process_cast(row):
     substring = row['cast']
@@ -74,7 +85,13 @@ def process_cast(row):
                if actor[0] == ' ':
                    actor = actor[1:]
                if  len(actor) > 0 and actor[0].isalpha():
-                   actor_set.add(actor)
+                   if actor in actor_dic:
+                       actor_dic[actor] = actor_dic[actor] + 1
+                       if actor_dic[actor] > pop_actor:
+                           actor_set.add(actor)
+                   else:
+                       actor_dic[actor] = 1
+                            
     '''
     index = substring.find('name\'')
     substring = substring[index + 8:]
