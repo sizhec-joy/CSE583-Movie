@@ -8,9 +8,9 @@ actor_set = {'Sho Kosugi'}
 director_dic = {'Mervyn LeRoy': 0}
 actor_dic = {'Sho Kosugi': 0}
 name_set = {'Stagecoach'}
-max_count = 1000
-pop_director = 20
-pop_actor = 100
+max_count = 50000
+pop_director = 10
+pop_actor = 30
 
 def process_genre(row):
     substring = row['genres']
