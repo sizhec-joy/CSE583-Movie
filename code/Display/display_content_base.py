@@ -29,6 +29,8 @@ for val in name_set:
     name_val.append({'label': val, 'value': val})
 #year_val = [{'label': 'All', 'value': 'All'}]
 #year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1970, 2017, 1)])
+#year_val = []
+#year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1900, 2017, 1)])
 
 
 def add_search_bar():

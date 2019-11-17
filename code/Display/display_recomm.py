@@ -63,9 +63,30 @@ def add_movies(zipped_list):
         )
     return result
 
+user_val = []
+user_val.extend([{'label': str(i), 'value': i} for i in np.arange(1, 467, 1)])
 
 def main():
     global_record.set_curr_movie_id_list(global_record.initial_movie_id_list)
+    search_bar = html.Div(
+        children=[
+            html.Div(children='Please type a user ID',
+                     style={'text-align': 'center',
+                            'font-size': '16px',
+                            'margin-bottom': '20px'}),
+            html.Div(dcc.Dropdown(
+                id='user_id_dropdown',
+                options=user_val,
+                # multi=True,
+                placeholder="Please select/type a user id"))
+        ]
+    )
+    search_button_div = html.Div(html.Button(id='user_id_button', children='Find User'),
+                                 style={'margin-top': '50px',
+                                        'margin-bottom': '100px',
+                                        'width': '40%',
+                                        'margin-left': '30%',
+                                        'text-align': 'center'})
     submit_button_div = html.Div(html.Button(id='my_button', children='Submit'),
                                  style={'margin-top': '50px',
                                         'margin-bottom': '100px',
@@ -76,6 +97,8 @@ def main():
     movie_div.append(submit_button_div)
     app_recommender_tab = html.Div([
         # html.H1(children='Movie Recommendation System'),
+        search_bar,
+        search_button_div,
         html.Div("List of movies:"),
         # TODO: initial movie_id list to be changed
         # html.Div(id='recommend_main_div', children=add_movies(zip(range(num_movie_rate), sample_list_movie_id[:num_movie_rate))),
