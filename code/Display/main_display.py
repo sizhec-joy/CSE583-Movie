@@ -15,6 +15,7 @@ links.
 For more details on building multi-page Dash applications, check out the Dash
 documentation: https://dash.plot.ly/urls
 """
+import grab_list
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -25,6 +26,8 @@ from app import app
 import display_popularity
 import display_content_base
 import display_recomm
+
+
 
 # we use the Row and Col components to construct the sidebar header
 # it consists of a title, and a toggle, the latter is hidden on large screens
@@ -91,6 +94,7 @@ sidebar = html.Div(
     id="sidebar",
 )
 
+
 content = html.Div(id="page-content")
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
@@ -132,6 +136,7 @@ def render_page_content(pathname):
             html.P(f"The pathname {pathname} was not recognised...")
         ]
     )
+
 
 
 display_popularity.call_back_popularity_filter()

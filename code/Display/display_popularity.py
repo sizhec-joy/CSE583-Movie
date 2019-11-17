@@ -4,7 +4,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import numpy as np
-
+import grab_list
 from app import app
 import display_final_movie
 import global_record
@@ -19,9 +19,52 @@ colors = {
 
 filter_options = ['Genre', 'Year', 'Country', 'Director', 'Actors']
 
-year_val = [{'label': 'All', 'value': 'All'}]
-year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1970, 2017, 1)])
+year_val = []
+year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1900, 2017, 1)])
 
+grab_list.read_csv()
+genre_set = sorted(grab_list.genre_set)
+country_set = sorted(grab_list.country_set)
+director_set = sorted(grab_list.director_set)
+actor_set = sorted(grab_list.actor_set)
+
+genre_val = []
+country_val = []
+director_val = []
+actor_val = []
+for val in genre_set:
+    genre_val.append({'label': val, 'value': val})
+for val in country_set:
+    country_val.append({'label': val, 'value': val})
+count = 0
+for val in director_set:
+    count = count + 1
+    if count > 100:
+        break
+    director_val.append({'label': val, 'value': val})
+count = 0
+for val in actor_set:
+    count = count + 1
+    if count > 100:
+        break
+    actor_val.append({'label': val, 'value': val})
+
+'''
+def set_genre_set(set):
+    genre_set = set
+    print(genre_set)
+'''
+def get_option(f):
+    if f == 'Genre':
+        return genre_val
+    elif f == 'Country':
+        return country_val
+    elif f == 'Director':
+        return director_val
+    elif f == 'Actors':
+        return actor_val
+    else:
+        return year_val
 
 def add_popularity_filter():
     movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
@@ -35,10 +78,10 @@ def add_popularity_filter():
                                 'font-size': '12px'}),
                 dcc.Dropdown(
                     id=f,
-                    options=year_val,
+                    options=get_option(f),
                     value="All",
                     # multi=True,
-                    placeholder="Please select a year")],
+                    placeholder="Please select a " + str(f))],
             style={
                 'width': '15%',
                 'margin-left': '4%',
