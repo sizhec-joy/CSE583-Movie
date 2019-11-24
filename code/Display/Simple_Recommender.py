@@ -84,7 +84,13 @@ def get_countries(df):
 # extend a row with a list of genres/directors/actors/countries to several rows with only one genre/director/actor/countrie
 
 
-
+def weighted_rating(x, m, C):
+    """
+    This function is to calculate weighted ratings
+    """
+    v = x['vote_count']
+    R = x['vote_average']
+    return (v/(v+m) * R) + (m/(m+v) * C)
 
 
 
@@ -122,40 +128,33 @@ class simple_recommendation:
         self.md_new = self.md_new.join(col_director)
         self.md_new = self.md_new.join(col_actor)
         self.md_new = self.md_new.join(col_country)
-    def weighted_rating(self, x):
-        """
-        This function is to calculate weighted ratings
-        """
-        m = self.m
-        C = self.C
-        v = x['vote_count']
-        R = x['vote_average']
-        return (v/(v+m) * R) + (m/(m+v) * C)
     def get_recommended_movies(self, constraints, percentile=0.8):
-        """
-        Input: constraints is a list of length 5
-        constraints = [genre,year,country,director,actor]
-        Each element in the input list is either a string or None type
-        Output: A dataframe contains 10 recommended movies (information about these movie included)
-        """
+        md_new = self.md_new
+        md = self.md
         constraint_names = ['genre','year','country','director','actor']
+        df = md_new
         for i in range(len(constraints)):
             if constraints[i]:
-                df = self.md_new[self.md_new[constraint_names[i]] == constraints[i]]
+                df = df[df[constraint_names[i]] == constraints[i]]
         vote_counts = df[df['vote_count'].notnull()]['vote_count'].astype('int')
         vote_averages = df[df['vote_average'].notnull()]['vote_average'].astype('int')
-        self.C = vote_averages.mean()
-        self.m = vote_counts.quantile(percentile)
-        m = self.m
-        C = self.C
-        qualified = df[(df['vote_count'] >= m) & (df['vote_count'].notnull()) & (df['vote_average'].notnull())][['title', 'genre','year','country','director','actor', 'vote_count', 'vote_average', 'popularity']]
+        C = vote_averages.mean()
+        m = vote_counts.quantile(percentile)
+        qualified = df[(df['vote_count'] >= m) & (df['vote_count'].notnull()) & (df['vote_average'].notnull())][['id', 'genre','year','country','director','actor', 'vote_count', 'vote_average', 'popularity']]
         qualified['vote_count'] = qualified['vote_count'].astype('int')
         qualified['vote_average'] = qualified['vote_average'].astype('int')
-        qualified['wr'] = qualified.apply(self.weighted_rating, axis=1)
-        qualified_list = qualified.sort_values('wr', ascending=False).drop_duplicates(subset=['title', 'year','vote_count', 'vote_average', 'popularity'],keep='first').head(10).title.to_list()
-        recommendation = self.md[self.md['title'].isin(qualified_list)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
+        qualified['wr'] = weighted_rating(qualified,m,C)
+        qualified_list = qualified.sort_values('wr', ascending=False).drop_duplicates(subset=['id', 'year','vote_count', 'vote_average', 'popularity'],keep='first').id.to_list()
+        id_set = []
+        for id_num in qualified_list:
+            if len(id_set) < 10:
+                if md['id'].to_list():
+                    id_set.append(id_num)
+        recommendation = md[md['id'].isin(id_set)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
         return recommendation
 
 
 #sp = simple_recommendation()
+file = open('sp.txt','wb')
+pickle.dump(sp, file)
 #print(sp.md)
