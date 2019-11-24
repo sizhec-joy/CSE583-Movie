@@ -12,10 +12,15 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import wordnet
 import warnings; warnings.simplefilter('ignore')
+import os.path
+
 
 Run = False
-if __name__ == "__main__":
+if not os.path.isfile('cp.txt'):
     Run = True
+    print("process file cp")
+
+
 
 if Run:
     md = pd.read_csv('movies_metadata.csv')

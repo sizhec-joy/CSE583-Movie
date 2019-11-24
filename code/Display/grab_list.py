@@ -14,6 +14,13 @@ id_title_set = {'Annie Hall': 703}
 max_count = 50000
 pop_director = 10
 pop_actor = 30
+import os.path
+Run = False
+if not os.path.isfile('meta.txt'):
+    Run = True
+    print('process file meta')
+
+
 
 def process_genre(row):
     substring = row['genres']
@@ -171,7 +178,9 @@ def save_file():
     print('file saved: meta.txt')
 
 
-if __name__ == "__main__":
+
+
+if Run:
     read_csv_c()
     #print(id_title_set)
     save_file()

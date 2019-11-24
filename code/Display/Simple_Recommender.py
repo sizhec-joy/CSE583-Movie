@@ -3,10 +3,13 @@ import numpy as np
 import ast
 import pickle
 from ast import literal_eval
-
+import os.path
 Run = False
-if __name__ == "__main__":
+
+
+if not os.path.isfile('sp.txt'):
     Run = True
+    print('process file sp')
 
 # functions to extract certain information in the data
 def get_genre(df):
