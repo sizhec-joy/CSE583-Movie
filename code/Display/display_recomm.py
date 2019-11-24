@@ -182,10 +182,10 @@ def call_back_recom():
                 list_next_movie_id = ls
                 num_movie_rate = len(list_next_movie_id)
                 print(list_next_movie_id)
-                global_record.set_curr_movie_id_list(list_next_movie_id)
-                global_record.add_total_list_shown()
+                #global_record.set_curr_movie_id_list(list_next_movie_id)
+                #global_record.add_total_list_shown()
                 result = add_movies(zip(range(num_movie_rate), list_next_movie_id))
-                result.append(submit_button_div)
+                #result.append(submit_button_div)
                 return result
         # elif n_clicks is not None and n_clicks > 0 and button_text == 'Go Back':
         #     global_record.set_total_list_shown(0)
