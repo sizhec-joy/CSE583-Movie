@@ -3,7 +3,6 @@ import numpy as np
 import ast
 from ast import literal_eval
 
-
 md = pd.read_csv('./the-movies-dataset/movies_metadata.csv')
 credits = pd.read_csv('./the-movies-dataset/credits.csv')
 
@@ -46,7 +45,7 @@ def get_director(df):
                 break
         directors.append(director)
         
-    return directors   
+    return directors
 
 def get_cast(df):
     """
@@ -95,7 +94,7 @@ md['cast'] = get_cast(md)
 md['year'] = get_year(md)
 md['countries'] = get_countries(md)
 
-def weighted_rating(x):
+def weighted_rating(x, m, C):
     """
     This function is to calculate weighted ratings
     """
@@ -117,7 +116,6 @@ md_new = md_new.join(col_director)
 md_new = md_new.join(col_actor)
 md_new = md_new.join(col_country)
 
-
 def get_recommended_movies(constraints, percentile=0.8):
     """
     Input: constraints is a list of length 5
@@ -126,24 +124,26 @@ def get_recommended_movies(constraints, percentile=0.8):
     Output: A dataframe contains 10 recommended movies (information about these movie included)
     """
     constraint_names = ['genre','year','country','director','actor']
+    df = md_new
     for i in range(len(constraints)):
         if constraints[i]:
-            df = md_new[md_new[constraint_names[i]] == constraints[i]]
-    
+            df = df[df[constraint_names[i]] == constraints[i]]
     vote_counts = df[df['vote_count'].notnull()]['vote_count'].astype('int')
     vote_averages = df[df['vote_average'].notnull()]['vote_average'].astype('int')
     C = vote_averages.mean()
     m = vote_counts.quantile(percentile)
     
-    qualified = df[(df['vote_count'] >= m) & (df['vote_count'].notnull()) & (df['vote_average'].notnull())][['title', 'genre','year','country','director','actor', 'vote_count', 'vote_average', 'popularity']]
+    qualified = df[(df['vote_count'] >= m) & (df['vote_count'].notnull()) & (df['vote_average'].notnull())][['id', 'genre','year','country','director','actor', 'vote_count', 'vote_average', 'popularity']]
     qualified['vote_count'] = qualified['vote_count'].astype('int')
     qualified['vote_average'] = qualified['vote_average'].astype('int')
-    qualified['wr'] = qualified.apply(weighted_rating, axis=1)
-    qualified_list = qualified.sort_values('wr', ascending=False).drop_duplicates(subset=['title', 'year','vote_count', 'vote_average', 'popularity'],keep='first').head(10).title.to_list()
-    recommendation = md[md['title'].isin(qualified_list)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
+    qualified['wr'] = weighted_rating(qualified,m,C)
+    qualified_list = qualified.sort_values('wr', ascending=False).drop_duplicates(subset=['id', 'year','vote_count', 'vote_average', 'popularity'],keep='first').id.to_list()
+    id_set = []
+    for id_num in qualified_list:
+        if len(id_set) < 10:
+            if md['id'].to_list():
+                id_set.append(id_num)
+    recommendation = md[md['id'].isin(id_set)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
     
     return recommendation
-
-
-
 
