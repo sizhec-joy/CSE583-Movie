@@ -8,6 +8,12 @@ import grab_list
 from app import app
 import display_final_movie
 import global_record
+from Simple_Recommender import simple_recommendation
+import pickle
+
+file = open('sp.txt','rb')
+sp = pickle.load(file)
+
 
 num_movie_rate = 8
 num_final_recommend = 10
@@ -27,6 +33,8 @@ genre_set = sorted(grab_list.genre_set)
 country_set = sorted(grab_list.country_set)
 director_set = sorted(grab_list.director_set)
 actor_set = sorted(grab_list.actor_set)
+id_set = sorted(grab_list.id_set)
+id_title_set = (grab_list.id_title_set)
 
 genre_val = []
 country_val = []
@@ -48,6 +56,7 @@ for val in actor_set:
     if count > grab_list.max_count:
         break
     actor_val.append({'label': val, 'value': val})
+
 
 '''
 def set_genre_set(set):
@@ -118,9 +127,30 @@ def call_back_popularity_filter():
             user_click = ctx.triggered[0]['prop_id'].split('.')[0]
         if n_clicks is not None and n_clicks > 0:
             list_filter = list(input_value)
+            print(list_filter)
+            for i in range(len(list_filter)):
+                if list_filter[i] == "All":
+                    list_filter[i] = None
+            print(list_filter)
+            recommend = sp.get_recommended_movies(list_filter)
+            print(recommend)
+            movie_names = recommend['title'].values.tolist()
+            print(movie_names)
+            list_next_movie_id = []
+            for mn in movie_names:
+                print(mn)
+                print(id_title_set[mn])
+                list_next_movie_id.append(id_title_set[mn])
+            print(list_next_movie_id)
+            ls = []
+            for ids in list_next_movie_id:
+                if ids in id_set:
+                    ls.append(ids)
             # TODO: call backend to filter here (param is a list: 'Genre', 'Year', 'Country', 'Director', 'Actors')
-            list_next_movie_id = [862 if r == 2000 else 2 for r in list_filter]
-            result = display_final_movie.add_final_movies(zip(range(5), list_next_movie_id))
+            #list_next_movie_id = [862 if r == 2000 else 2 for r in list_filter]
+            list_next_movie_id = ls
+            print(list_next_movie_id)
+            result = display_final_movie.add_final_movies(zip(range(len(list_next_movie_id)), list_next_movie_id))
             return result
         else:
             raise PreventUpdate

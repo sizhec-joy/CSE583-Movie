@@ -8,6 +8,8 @@ actor_set = {'Sho Kosugi'}
 director_dic = {'Mervyn LeRoy': 0}
 actor_dic = {'Sho Kosugi': 0}
 name_set = {'Stagecoach'}
+id_set = {2}
+id_title_set = {'Annie Hall': 703}
 max_count = 50000
 pop_director = 10
 pop_actor = 30
@@ -32,8 +34,22 @@ def process_name(row):
         return
     if len(substring) > 0 and substring[0].isalpha():
         name_set.add(substring)
-    
-    
+
+def process_id(row):
+    substring = row['id']
+    if len(substring) > 0 and substring.isnumeric():
+        id_set.add(int(substring))
+
+def process_title_id(row):
+    substring = row['id']
+    substringg = row['title']
+    index = 100000
+    if substring is None or substringg is None:
+        return
+    if len(substringg) > 0 and substringg[0].isalpha() and len(substring) > 0 and substring.isnumeric():
+        id_title_set[substringg] = int(substring)
+
+
 def process_country(row):
     substring = row['production_countries']
     if substring is None:
@@ -46,7 +62,7 @@ def process_country(row):
            index_end = substring.find('\'')
            country = substring[0:index_end]
            country_set.add(country)
-           
+
 def process_director(row):
     substring = row['crew']
     if substring is None:
@@ -66,7 +82,7 @@ def process_director(row):
                 director_set.add(director)
         else:
             director_dic[director] = 1
-        
+
 
 def process_cast(row):
     substring = row['cast']
@@ -81,7 +97,7 @@ def process_cast(row):
            actor = substring[0:index_end]
            if actor is None or len(actor) < 1:
                pass;
-           else:               
+           else:
                if actor[0] == ' ':
                    actor = actor[1:]
                if  len(actor) > 0 and actor[0].isalpha():
@@ -91,7 +107,7 @@ def process_cast(row):
                            actor_set.add(actor)
                    else:
                        actor_dic[actor] = 1
-                            
+
     '''
     index = substring.find('name\'')
     substring = substring[index + 8:]
@@ -109,7 +125,9 @@ def read_csv():
             process_genre(row)
             process_country(row)
             process_name(row)
-           
+            process_id(row)
+            process_title_id(row)
+
     with open('credits.csv', mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
@@ -117,6 +135,8 @@ def read_csv():
             process_director(row)
             process_cast(row)
 
+#read_csv()
+#print(id_title_set)
 #print(name_set)
 #print(genre_set)
 #print(country_set)
