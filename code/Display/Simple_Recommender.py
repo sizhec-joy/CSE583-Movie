@@ -154,7 +154,7 @@ class simple_recommendation:
         return recommendation
 
 
-#sp = simple_recommendation()
+sp = simple_recommendation()
 file = open('sp.txt','wb')
 pickle.dump(sp, file)
 #print(sp.md)
