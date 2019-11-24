@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import ast
+import pickle
 from ast import literal_eval
 
 
@@ -129,10 +130,8 @@ class simple_recommendation:
         self.md_new = self.md_new.join(col_actor)
         self.md_new = self.md_new.join(col_country)
     def get_recommended_movies(self, constraints, percentile=0.8):
-        md_new = self.md_new
-        md = self.md
         constraint_names = ['genre','year','country','director','actor']
-        df = md_new
+        df = self.md_new
         for i in range(len(constraints)):
             if constraints[i]:
                 df = df[df[constraint_names[i]] == constraints[i]]
@@ -148,13 +147,13 @@ class simple_recommendation:
         id_set = []
         for id_num in qualified_list:
             if len(id_set) < 10:
-                if md['id'].to_list():
+                if self.md['id'].to_list():
                     id_set.append(id_num)
-        recommendation = md[md['id'].isin(id_set)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
+        recommendation = self.md[self.md['id'].isin(id_set)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
         return recommendation
 
 
-sp = simple_recommendation()
-file = open('sp.txt','wb')
-pickle.dump(sp, file)
+#sp = simple_recommendation()
+#file = open('sp.txt','wb')
+#pickle.dump(sp, file)
 #print(sp.md)

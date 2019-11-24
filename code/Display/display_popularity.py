@@ -127,21 +127,22 @@ def call_back_popularity_filter():
             user_click = ctx.triggered[0]['prop_id'].split('.')[0]
         if n_clicks is not None and n_clicks > 0:
             list_filter = list(input_value)
-            print(list_filter)
+            #print(list_filter)
             for i in range(len(list_filter)):
+                list_filter[i] = str(list_filter[i])
                 if list_filter[i] == "All":
                     list_filter[i] = None
-            print(list_filter)
+            #print(list_filter)
             recommend = sp.get_recommended_movies(list_filter)
-            print(recommend)
+            #print(recommend)
             movie_names = recommend['title'].values.tolist()
-            print(movie_names)
+            #print(movie_names)
             list_next_movie_id = []
             for mn in movie_names:
-                print(mn)
-                print(id_title_set[mn])
+                #print(mn)
+                #print(id_title_set[mn])
                 list_next_movie_id.append(id_title_set[mn])
-            print(list_next_movie_id)
+            #print(list_next_movie_id)
             ls = []
             for ids in list_next_movie_id:
                 if ids in id_set:
@@ -149,7 +150,7 @@ def call_back_popularity_filter():
             # TODO: call backend to filter here (param is a list: 'Genre', 'Year', 'Country', 'Director', 'Actors')
             #list_next_movie_id = [862 if r == 2000 else 2 for r in list_filter]
             list_next_movie_id = ls
-            print(list_next_movie_id)
+            #print(list_next_movie_id)
             result = display_final_movie.add_final_movies(zip(range(len(list_next_movie_id)), list_next_movie_id))
             return result
         else:

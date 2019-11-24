@@ -3,8 +3,8 @@ import numpy as np
 import ast
 from ast import literal_eval
 
-md = pd.read_csv('./the-movies-dataset/movies_metadata.csv')
-credits = pd.read_csv('./the-movies-dataset/credits.csv')
+md = pd.read_csv('movies_metadata.csv')
+credits = pd.read_csv('credits.csv')
 
 # drop some inappropriate records
 md = md[md['release_date'].notnull()]
@@ -44,7 +44,6 @@ def get_director(df):
                 director.append(crewinfo['name'])
                 break
         directors.append(director)
-        
     return directors
 
 def get_cast(df):
@@ -116,7 +115,7 @@ md_new = md_new.join(col_director)
 md_new = md_new.join(col_actor)
 md_new = md_new.join(col_country)
 
-def get_recommended_movies(constraints, percentile=0.8):
+def get_recommended_movies(md, md_new, constraints, percentile=0.8):
     """
     Input: constraints is a list of length 5
     constraints = [genre,year,country,director,actor]
@@ -132,7 +131,6 @@ def get_recommended_movies(constraints, percentile=0.8):
     vote_averages = df[df['vote_average'].notnull()]['vote_average'].astype('int')
     C = vote_averages.mean()
     m = vote_counts.quantile(percentile)
-    
     qualified = df[(df['vote_count'] >= m) & (df['vote_count'].notnull()) & (df['vote_average'].notnull())][['id', 'genre','year','country','director','actor', 'vote_count', 'vote_average', 'popularity']]
     qualified['vote_count'] = qualified['vote_count'].astype('int')
     qualified['vote_average'] = qualified['vote_average'].astype('int')
@@ -144,6 +142,4 @@ def get_recommended_movies(constraints, percentile=0.8):
             if md['id'].to_list():
                 id_set.append(id_num)
     recommendation = md[md['id'].isin(id_set)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
-    
     return recommendation
-

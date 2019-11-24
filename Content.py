@@ -98,30 +98,35 @@ full_md = full_md.reset_index()
 titles = full_md['title']
 indices = pd.Series(full_md.index, index=full_md['title'])
 
-def get_recommendations(title):
-    idx = indices[title]
-    if type(idx) == numpy.int64:
-        pass
-    else:
-        if len(list(idx)) > 1:
-            idx = list(idx)[0]
-            
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:31]
-    movie_indices = [i[0] for i in sim_scores]
-    ans = []
-    for movie in titles.iloc[movie_indices]:
-        if movie not in ans:
-            ans.append(movie)
-        if len(ans) == 10:
-            return ans
-    return ans
-        
-def get_recommended_movies(movie):
-    list = get_recommendations(movie)
-    return full_md[full_md['title'].isin(list)]
+class content_recommendation:
+    def __init__(self, full_md, titles, cosine_sim, indices):
+        self.full_md = full_md
+        self.titles = titles
+        self.cosine_sim = cosine_sim
+        self.indices = indices
+    def get_recommendations(self, title):
+        idx = self.indices[title]
+        if type(idx) == numpy.int64:
+            pass
+        else:
+            if len(list(idx)) > 1:
+                idx = list(idx)[0]
+        sim_scores = list(enumerate(self.cosine_sim[idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        sim_scores = sim_scores[1:31]
+        movie_indices = [i[0] for i in sim_scores]
+        ans = []
+        for movie in self.titles.iloc[movie_indices]:
+            if movie not in ans:
+                ans.append(movie)
+            if len(ans) == 10:
+                return ans
+        return ans
+    def get_recommended_movies(self, movie):
+        list = self.get_recommendations(movie)
+        return self.full_md[self.full_md['title'].isin(list)]
 
 
-# Futurework1: 
+cp = content_recommendation(full_md, titles, cosine_sim, indices)
+# Futurework1:
 # If we recommend movies just based on the similarity between regardless of ratings and popularity, we'll recommend bad movies to users. Thus we can build a machanism to filter bad movies combined with the content recommender system.

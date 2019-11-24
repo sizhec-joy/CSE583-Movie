@@ -22,6 +22,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from Simple_Recommender import simple_recommendation
+from Content import content_recommendation
 from app import app
 import display_popularity
 import display_content_base
