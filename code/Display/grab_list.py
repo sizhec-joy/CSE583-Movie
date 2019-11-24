@@ -1,6 +1,10 @@
 import csv
 import sys
 import pickle
+import os.path
+
+
+
 genre_set = {'Foreign'}
 #year_set = {}
 country_set = {'United States of America'}
@@ -14,12 +18,17 @@ id_title_set = {'Annie Hall': 703}
 max_count = 50000
 pop_director = 10
 pop_actor = 30
-import os.path
+
+
+
+
 Run = False
 if not os.path.isfile('meta.txt'):
     Run = True
     print('process file meta')
-
+if __name__ == "__main__":
+    Run = True
+    print("process file meta")
 
 
 def process_genre(row):

@@ -11,6 +11,10 @@ if not os.path.isfile('sp.txt'):
     Run = True
     print('process file sp')
 
+if __name__ == "__main__":
+    Run = True
+    print("process file sp")
+
 # functions to extract certain information in the data
 def get_genre(df):
     """

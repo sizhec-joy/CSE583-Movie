@@ -16,6 +16,10 @@ import os.path
 
 
 Run = False
+if __name__ == "__main__":
+    Run = True
+    print("process file cp")
+
 if not os.path.isfile('cp.txt'):
     Run = True
     print("process file cp")
