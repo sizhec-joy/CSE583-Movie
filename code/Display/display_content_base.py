@@ -13,21 +13,23 @@ import pickle
 
 num_movie_rate = 8
 num_final_recommend = 10
+test = False
 
 file = open('cp.txt','rb')
 cp = pickle.load(file)
 print('computing similarity')
-cp.generate_cosine_sim()
+if test:
+    cp.generate_cosine_sim()
 
 colors = {
     'background': '#111111',
     'text': '#000080'
 }
 
-grab_list.read_csv()
-name_set = sorted(grab_list.name_set)
-id_set = sorted(grab_list.id_set)
-id_title_set = (grab_list.id_title_set)
+ob = grab_list.read_csv()
+name_set = ob.name_set
+id_set = ob.id_set
+id_title_set = ob.id_title_set
 name_val = []
 count = 0
 for val in name_set:
@@ -94,7 +96,7 @@ def call_back_filter():
             for mn in movie_names:
                 #print(mn)
                 #print(id_title_set[mn])
-                list_next_movie_id.append(id_title_set[mn])
+                list_next_movie_id.append(int(id_title_set[mn]))
             #print(list_next_movie_id)
             ls = []
             for ids in list_next_movie_id:

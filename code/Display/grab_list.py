@@ -1,5 +1,6 @@
 import csv
 import sys
+import pickle
 genre_set = {'Foreign'}
 #year_set = {}
 country_set = {'United States of America'}
@@ -118,6 +119,11 @@ def process_cast(row):
 '''
 
 def read_csv():
+    file = open('meta.txt','rb')
+    obs = pickle.load(file)
+    return obs
+
+def read_csv_c():
     with open('movies_metadata.csv', mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
@@ -134,7 +140,41 @@ def read_csv():
         for row in csv_reader:
             process_director(row)
             process_cast(row)
+"""
+country_set = {'United States of America'}
+director_set = {'Mervyn LeRoy'}
+actor_set = {'Sho Kosugi'}
+director_dic = {'Mervyn LeRoy': 0}
+actor_dic = {'Sho Kosugi': 0}
+name_set = {'Stagecoach'}
+id_set = {2}
+id_title_set = {'Annie Hall': 703}
+"""
+class object_save:
+    def __init__(self, genre_set, country_set, director_set, actor_set, director_dic, actor_dic, name_set, id_set, id_title_set):
+        self.country_set = sorted(country_set)
+        self.genre_set = sorted(genre_set)
+        self.director_set = sorted(director_set)
+        self.actor_set = sorted(actor_set)
+        self.director_dic = (director_dic)
+        self.actor_dic = (actor_dic)
+        self.name_set = sorted(name_set)
+        self.id_set = sorted(id_set)
+        self.id_title_set = (id_title_set)
 
+
+def save_file():
+
+    obs = object_save(genre_set, country_set, director_set, actor_set, director_dic, actor_dic, name_set, id_set, id_title_set)
+    file = open('meta.txt','wb')
+    pickle.dump(obs, file)
+    print('file saved: meta.txt')
+
+
+if __name__ == "__main__":
+    read_csv_c()
+    #print(id_title_set)
+    save_file()
 #read_csv()
 #print(id_title_set)
 #print(name_set)

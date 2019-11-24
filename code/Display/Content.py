@@ -14,6 +14,9 @@ from nltk.corpus import wordnet
 import warnings; warnings.simplefilter('ignore')
 
 Run = False
+if __name__ == "__main__":
+    Run = True
+
 if Run:
     md = pd.read_csv('movies_metadata.csv')
     md['genres'] = md['genres'].fillna('[]').apply(literal_eval).apply(lambda x: [i['name'] for i in x] if isinstance(x, list) else [])

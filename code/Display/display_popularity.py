@@ -28,13 +28,14 @@ filter_options = ['Genre', 'Year', 'Country', 'Director', 'Actors']
 year_val = []
 year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1900, 2017, 1)])
 
-grab_list.read_csv()
-genre_set = sorted(grab_list.genre_set)
-country_set = sorted(grab_list.country_set)
-director_set = sorted(grab_list.director_set)
-actor_set = sorted(grab_list.actor_set)
-id_set = sorted(grab_list.id_set)
-id_title_set = (grab_list.id_title_set)
+obs = grab_list.read_csv()
+genre_set = obs.genre_set
+country_set = obs.country_set
+director_set = obs.director_set
+actor_set = obs.actor_set
+id_set = obs.id_set
+id_title_set = obs.id_title_set
+#print(id_title_set)
 
 genre_val = []
 country_val = []
@@ -139,10 +140,10 @@ def call_back_popularity_filter():
             #print(movie_names)
             list_next_movie_id = []
             for mn in movie_names:
-                #print(mn)
+                print(mn)
                 #print(id_title_set[mn])
-                list_next_movie_id.append(id_title_set[mn])
-            #print(list_next_movie_id)
+                list_next_movie_id.append(int(id_title_set[mn]))
+            print(list_next_movie_id)
             ls = []
             for ids in list_next_movie_id:
                 if ids in id_set:

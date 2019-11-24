@@ -24,6 +24,7 @@ from dash.dependencies import Input, Output, State
 from Simple_Recommender import simple_recommendation
 from Content import content_recommendation
 from app import app
+from grab_list import object_save
 import display_popularity
 import display_content_base
 import display_recomm

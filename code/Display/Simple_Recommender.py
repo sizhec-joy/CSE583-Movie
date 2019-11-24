@@ -4,7 +4,9 @@ import ast
 import pickle
 from ast import literal_eval
 
-
+Run = False
+if __name__ == "__main__":
+    Run = True
 
 # functions to extract certain information in the data
 def get_genre(df):
@@ -152,8 +154,8 @@ class simple_recommendation:
         recommendation = self.md[self.md['id'].isin(id_set)][['title', 'genres','year','countries','director','cast', 'vote_count', 'vote_average', 'popularity']]
         return recommendation
 
-
-#sp = simple_recommendation()
-#file = open('sp.txt','wb')
-#pickle.dump(sp, file)
+if Run:
+    sp = simple_recommendation()
+    file = open('sp.txt','wb')
+    pickle.dump(sp, file)
 #print(sp.md)
