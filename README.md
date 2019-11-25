@@ -58,7 +58,7 @@ Our dataset contains 5 main files:
 ​	**User input:** User id
 
 ​	**System output:** Recommended movies by user based filtering and item based filtering. For user-based recommendation, the system recommends movies to the user that similar users like. 
-![8401574709929_.pic_hd](../../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/71d7fea6b21e6334d625ef3bdc8f0b48/Message/MessageTemp/517557792affa40926704af199e2a93f/Image/8401574709929_.pic_hd.jpg)
+![img](https://lh4.googleusercontent.com/RJmo8OrXxaQEqj7T__PjD2s_tCYHkKu-OFG1Oo9GKZ0sTE27OqylQ62R1q5MkAuWj1KNI_bYItuoyoaSkQloaXuYvOGYYfWZbxAHwYgx026Q-t1_pifpiG7vPxUWAjT0JrlnJjC9)
 
 ## Component Specification
 
