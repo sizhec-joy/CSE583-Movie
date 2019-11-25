@@ -74,7 +74,9 @@ user_val = []
 user_val.extend([{'label': str(i), 'value': i} for i in np.arange(1, 467, 1)])
 
 def main():
-    global_record.set_curr_movie_id_list(global_record.initial_movie_id_list)
+    movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
+                                                         global_record.initial_movie_id_list[10:(10+num_final_recommend)]))
+    #global_record.set_curr_movie_id_list(global_record.initial_movie_id_list)
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a user ID',
@@ -94,14 +96,22 @@ def main():
                                         'width': '40%',
                                         'margin-left': '30%',
                                         'text-align': 'center'})
+    '''
     submit_button_div = html.Div(html.Button(id='my_button', children='Submit'),
                                  style={'margin-top': '50px',
                                         'margin-bottom': '100px',
                                         'width': '40%',
                                         'padding-left': '45%',
                                         'padding-right': '15%'})
+    '''
     movie_div = add_movies(zip(range(num_movie_rate), global_record.get_curr_movie_id_list()[:num_movie_rate]))
-    movie_div.append(submit_button_div)
+    #movie_div.append(submit_button_div)
+    app_recommender_tab = html.Div(children=[])
+    app_recommender_tab.children.append(html.Div(search_bar, style={'margin-top': '50px'}))
+    app_recommender_tab.children.append(search_button_div)
+    app_recommender_tab.children.append(html.Div("List of movies:"))
+    app_recommender_tab.children.append(html.Div(id='recommend_main_div', children=movie_div))
+    '''
     app_recommender_tab = html.Div([
         # html.H1(children='Movie Recommendation System'),
         search_bar,
@@ -112,10 +122,13 @@ def main():
         # html.Div(html.Button(id='my_button', children='Submit'),
         #          style={'margin': '15px', 'width': '40%', 'padding-left': '40%', 'padding-right': '20%'})])
         html.Div(id='recommend_main_div', children=movie_div)])
+        '''
     return app_recommender_tab
 
 
 def call_back_recom():
+    list_state = [State('user_id_dropdown', 'value')]
+    '''
     list_state = [State(f'rating_{i}', 'value') for i in range(num_movie_rate)]
     list_state.append(State('my_button', 'children'))
 
@@ -132,7 +145,7 @@ def call_back_recom():
                                       'width': '40%',
                                       'padding-left': '45%',
                                       'padding-right': '15%'})
-
+    '''
     # TODO: should add restrictions to click button (all dropdown boxes should be filled out)
     @app.callback(
         Output('recommend_main_div', 'children'),
@@ -145,7 +158,7 @@ def call_back_recom():
         else:
             user_click = ctx.triggered[0]['prop_id'].split('.')[0]
         button_text = input_value[-1]
-        if n_clicks is not None and n_clicks > 0 and button_text == 'Submit':
+        if n_clicks is not None and n_clicks > 0:
             # input_value = ctx.states.values()
             # rating of the current movies
             list_rating = list(map(float, input_value[:-1]))
@@ -160,6 +173,7 @@ def call_back_recom():
                 return result
             else:
                 list_filter = list(input_value)
+                print(list_filter)
                 user_id = int(list_filter[0])
                 print(user_id)
                 # then use rating and id of current movies, to calculate id's of the next 15 movies
