@@ -13,7 +13,7 @@ import pickle
 
 num_movie_rate = 8
 num_final_recommend = 10
-test = False
+test = True
 
 file = open('cp.txt','rb')
 cp = pickle.load(file)

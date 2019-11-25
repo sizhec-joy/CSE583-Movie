@@ -145,7 +145,7 @@ class content_recommendation:
         return ans
     def get_recommended_movies(self, movie):
         list = self.get_recommendations(movie)
-        return self.full_md[self.full_md['title'].isin(list)]
+        return self.full_md[self.full_md['title'].isin(list)].drop_duplicates(subset=['title'])
 
 if Run:
     cp = content_recommendation(full_md, titles, indices)
