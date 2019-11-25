@@ -104,7 +104,7 @@ def get_recommended_movies(user_id):
         if len(id_set) < 10:
             if i[0] in full_md['id'].to_list():
                 id_set.append(i[0])
-    recommendation = full_md[full_md['id'].isin(id_set)]
+    recommendation = full_md[full_md['id'].isin(id_set)][['title','id']].values.tolist()
     return recommendation
 
 
