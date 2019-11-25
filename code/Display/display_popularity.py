@@ -142,7 +142,8 @@ def call_back_popularity_filter():
             for mn in movie_names:
                 print(mn)
                 #print(id_title_set[mn])
-                list_next_movie_id.append(int(id_title_set[mn]))
+                if mn in id_title_set:
+                    list_next_movie_id.append(int(id_title_set[mn]))
             print(list_next_movie_id)
             ls = []
             for ids in list_next_movie_id:

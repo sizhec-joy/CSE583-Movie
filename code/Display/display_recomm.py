@@ -184,8 +184,9 @@ def call_back_recom():
                 movie_names = cop.user_recommendation_dic[user_id]
                 for mn in movie_names:
                     print(mn)
+                    if mn in id_title_set:
                     #print(id_title_set[mn])
-                    list_next_movie_id.append(int(id_title_set[mn]))
+                        list_next_movie_id.append(int(id_title_set[mn]))
                 print(list_next_movie_id)
                 ls = []
                 for ids in list_next_movie_id:
