@@ -31,35 +31,33 @@ Our dataset contains 5 main files:
 
 **ratings.csv:** Contains 27,000,000 ratings and 1,100,000 tag applications applied to 58,000 movies by 280,000 users.Use cases. 
 
-#### Two use cases
+#### Use Cases
 
-**Use Case 1:**
+**The objective of the user interaction:** Get 10 movies he/she may like
 
-**The objective of the user interaction:** Predicting rating and popularity of a movie based on input information
+**Use case 1:**
 
-**User input:** Cast, country, crew, category, company, budget, runtime etc.
+**For Simple filtering:**
 
-**System output:** Predicted movie rating/ popularity![img](https://lh6.googleusercontent.com/7_O8L3umIEhUBi2Fi-RUfoyYo_lNVgioHalad10Z_92NpjFSQUcHBOVlDxorDaXrcx7F41uA3AqMe6rv3uA8ClAD0ipNKMn4l5148yoekwurM4vTSNW01FkuxHZFWCbrLLMRYcs_)**Use case 2:**
+​	**User input:** 5 filters: genre, year, country, director, actor 
 
-**The objective of the user interaction:** Get 5 movies he/she may like
+​	**System output:** Recommended movies based on movie popularity
 
-**For Demographic filtering:**
-
-​	**User input:** None
-
-​	**System output:** Recommended movies based on movie popularity. 
+**Use case 2:**
 
 **For Content based filtering:**
 
-​	**User input:** genre, director, description, actors
+​	**User input:** Movie title
 
-​	**System output:** Recommended movies based on movie popularity.
+​	**System output:** Recommended movies based on the similarity to the given movie
+
+**Use case 3:**
 
 **For collaborative filtering:**
 
-​	**User input:** None
+​	**User input:** User id
 
-​	**System output:** Recommended movies by user based filtering and item based filtering. For user-based recommendation, the system recommends movies to the user that similar users like. For item-based recommendation, the result is based on the similarity with the movies that the user rated. ![img](https://lh6.googleusercontent.com/psmMhX9QqeuVIzc0xB1oQ6RQVeY7m1vMEfpCUGtHIJR8YFnngNikmWpV8QL4FJeccZDHql9XnTT7cc7RGblxL6m5weGGWdyMRbiXQjv3Kh843IJLLVnW7pSNMkPvWLico8tLUTO9)
+​	**System output:** Recommended movies by user based filtering and item based filtering. For user-based recommendation, the system recommends movies to the user that similar users like. 
 
 ## Component Specification
 
