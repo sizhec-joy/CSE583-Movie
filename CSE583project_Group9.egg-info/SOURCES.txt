@@ -1,0 +1,31 @@
+README.md
+setup.py
+CSE583project_Group9.egg-info/PKG-INFO
+CSE583project_Group9.egg-info/SOURCES.txt
+CSE583project_Group9.egg-info/dependency_links.txt
+CSE583project_Group9.egg-info/requires.txt
+CSE583project_Group9.egg-info/top_level.txt
+Movie Recommendations/Collaborative.py
+Movie Recommendations/Content.py
+Movie Recommendations/Simple_Recommender.py
+Movie Recommendations/__init__.py
+Movie Recommendations/app.py
+Movie Recommendations/display_content_base.py
+Movie Recommendations/display_final_movie.py
+Movie Recommendations/display_popularity.py
+Movie Recommendations/display_recomm.py
+Movie Recommendations/get_movie_info.py
+Movie Recommendations/global_record.py
+Movie Recommendations/grab_list.py
+Movie Recommendations/main_display.py
+Movie Recommendations/movies-dataset/credits.csv.zip
+Movie Recommendations/movies-dataset/keywords.csv
+Movie Recommendations/movies-dataset/links.csv
+Movie Recommendations/movies-dataset/links_small.csv
+Movie Recommendations/movies-dataset/movies_metadata.csv.zip
+Movie Recommendations/movies-dataset/ratings.csv
+Movie Recommendations/movies-dataset/source/collaborative_result.csv
+Movie Recommendations/movies-dataset/source/cop.txt
+Movie Recommendations/movies-dataset/source/ratings.csv
+Movie Recommendations/tests/__init__.py
+Movie Recommendations/tests/test_module.py
