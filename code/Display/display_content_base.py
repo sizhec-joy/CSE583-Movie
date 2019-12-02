@@ -56,19 +56,24 @@ def add_search_bar():
                 id='movie_search_dropdown',
                 options=name_val,
                 # multi=True,
-                placeholder="Please select/type a movie"))
+                placeholder="Please select/type a movie"),
+                style={'text-align': 'center',
+                       'font-size': '16px'})
         ]
     )
     app_filter_tab = html.Div(children=[])
-    app_filter_tab.children.append(html.Div(search_bar, style={'margin-top': '50px'}))
-    search_button_div = html.Div(html.Button(id='search_similar_button', children='Find Similar Movies'),
+    app_filter_tab.children.append(html.Div(html.H1('Content-based Filtering'),
+                                            className='wrap'))
+    app_filter_tab.children.append(html.Div(search_bar, style={'margin-top': '15px'}))
+    search_button_div = html.Div(html.Button(id='search_similar_button',
+                                             children='Find Similar Movies',
+                                             style={'font-size': '13px'}),
                                  style={'margin-top': '50px',
-                                        'margin-bottom': '100px',
+                                        'margin-bottom': '20px',
                                         'width': '40%',
                                         'margin-left': '30%',
                                         'text-align': 'center'})
     app_filter_tab.children.append(search_button_div)
-    app_filter_tab.children.append(html.Div("List of movies:"))
     app_filter_tab.children.append(html.Div(id='content_base_main_div', children=movie_div))
     return app_filter_tab
 

@@ -140,7 +140,7 @@ def read_csv():
     return obs
 
 def read_csv_c():
-    with open('movies_metadata.csv', mode='r') as csv_file:
+    with open('movies_metadata.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
         for row in csv_reader:
@@ -150,7 +150,7 @@ def read_csv_c():
             process_id(row)
             process_title_id(row)
 
-    with open('credits.csv', mode='r') as csv_file:
+    with open('credits.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
         for row in csv_reader:

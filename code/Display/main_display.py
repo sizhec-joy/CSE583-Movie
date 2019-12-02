@@ -29,14 +29,14 @@ from Collaborative import collaborative
 import display_popularity
 import display_content_base
 import display_recomm
-
+import display_final_movie
 
 
 # we use the Row and Col components to construct the sidebar header
 # it consists of a title, and a toggle, the latter is hidden on large screens
 sidebar_header = dbc.Row(
     [
-        dbc.Col(html.H2("Sidebar", className="display-4")),
+        dbc.Col(html.H2("Movie Recommender", className="display-5")),
         dbc.Col(
             html.Button(
                 # use the Bootstrap navbar-toggler classes to style the toggle
@@ -65,12 +65,7 @@ sidebar = html.Div(
         # hidden on a small screen
         html.Div(
             [
-                html.Hr(),
-                html.P(
-                    "A responsive sidebar layout with collapsible navigation "
-                    "links.",
-                    className="lead",
-                ),
+                html.Hr()
             ],
             id="blurb",
         ),
@@ -78,15 +73,18 @@ sidebar = html.Div(
         dbc.Collapse(
             dbc.Nav(
                 [
-                    dbc.NavLink("Demographic Filtering",
-                                href="/page-demographic-filtering",
-                                id="page-demographic-filtering-link"),
-                    dbc.NavLink("Content Based Filtering",
+                    dbc.NavLink("Simple Filtering",
+                                href="/page-simple-filtering",
+                                id="page-simple-filtering-link",
+                                style={'font-size': '13px'}),
+                    dbc.NavLink("Content-based Filtering",
                                 href="/page-content-based-filtering",
-                                id="page-content-based-filtering-link"),
-                    dbc.NavLink("Collaborative Filtering",
-                                href="/page-collaborative-filtering",
-                                id="page-collaborative-filtering-link")
+                                id="page-content-based-filtering-link",
+                                style={'font-size': '13px'}),
+                    dbc.NavLink("User-based Filtering",
+                                href="/page-user-based-filtering",
+                                id="page-user-based-filtering-link",
+                                style={'font-size': '13px'})
                 ],
                 vertical=True,
                 pills=True,
@@ -98,14 +96,19 @@ sidebar = html.Div(
 )
 
 
-content = html.Div(id="page-content")
+content = dcc.Loading(id="loading-page-main",
+                      children=[
+                          html.Div(id="page-content")],
+                      # type='dot',
+                      fullscreen=True,
+                      color='#2B60DE')
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 
 # this callback uses the current pathname to set the active state of the
 # corresponding nav link to true, allowing users to tell see page they are on
-page_names = ['demographic-filtering', 'content-based-filtering', 'collaborative-filtering']
+page_names = ['simple-filtering', 'content-based-filtering', 'user-based-filtering']
 @app.callback(
     [Output(f"page-{page_name}-link", "active") for page_name in page_names],
     [Input("url", "pathname")],
@@ -119,7 +122,7 @@ def toggle_active_links(pathname):
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
-    if pathname in ["/", "/page-demographic-filtering"]:
+    if pathname in ["/", "/page-simple-filtering"]:
         # return
         app_popularity_tab = display_popularity.main()
         return app_popularity_tab
@@ -127,7 +130,7 @@ def render_page_content(pathname):
         # return
         app_filter_tab = display_content_base.main()
         return app_filter_tab
-    elif pathname == "/page-collaborative-filtering":
+    elif pathname == "/page-user-based-filtering":
         # return
         app_recommender_tab = display_recomm.main()
         return app_recommender_tab
@@ -139,7 +142,6 @@ def render_page_content(pathname):
             html.P(f"The pathname {pathname} was not recognised...")
         ]
     )
-
 
 
 display_popularity.call_back_popularity_filter()
@@ -159,4 +161,4 @@ def toggle_collapse(n, is_open):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)

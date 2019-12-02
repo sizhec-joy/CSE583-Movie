@@ -34,3 +34,10 @@
   color: white;
   font-size: 9px;
 }
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}

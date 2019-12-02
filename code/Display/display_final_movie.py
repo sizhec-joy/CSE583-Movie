@@ -1,46 +1,65 @@
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import dash_html_components as html
 import numpy as np
 import get_movie_info
+from app import app
+from dash.dependencies import Input, Output, State
 
 colors = {
     'background': '#111111',
-    'text': '#000080'
+    'text': '#000000'
 }
 num_movie_rate = 8
 num_final_recommend = 10
 
 
 def add_final_movies(zipped_list):
-    result = [html.Div("List of movies recommended:")]
+    result = []
     for item in zipped_list:
         item_index = item[0]
         item_movie_id = item[1]
         item_json = get_movie_info.get_movie_json(item_movie_id)
-
-        name = item_json[get_movie_info.MovieJsonKeys.name]
-        poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
-        overview = item_json[get_movie_info.MovieJsonKeys.overview]
-        vote_average = item_json[get_movie_info.MovieJsonKeys.vote_average]
-        genres = ', '.join([elem['name'] for elem in item_json[get_movie_info.MovieJsonKeys.genres]])
-        homepage = item_json[get_movie_info.MovieJsonKeys.homepage]
-        if homepage is None:
-            homepage_div = html.Div('Homepage: N/A')
-        else:
-            homepage_div = html.Div(['Homepage: ',
-                                     html.A(children=homepage,
-                                            href=homepage,
-                                            style={'color': 'white'})])
-        release_date = item_json[get_movie_info.MovieJsonKeys.release_date]
-        popularity = item_json[get_movie_info.MovieJsonKeys.popularity]
-        runtime = item_json[get_movie_info.MovieJsonKeys.runtime]
-
+        try:
+            name = item_json[get_movie_info.MovieJsonKeys.name]
+            poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
+            overview = item_json[get_movie_info.MovieJsonKeys.overview]
+            vote_average = item_json[get_movie_info.MovieJsonKeys.vote_average]
+            list_genres = item_json[get_movie_info.MovieJsonKeys.genres]
+            if len(list_genres) > 5:
+                genres1 = ', '.join([elem['name'] for elem in list_genres[:4]])+','
+                genres2 = ', '.join([elem['name'] for elem in list_genres[4:]])
+                genres_div = html.Div(children=[
+                    html.Div(children='Genres:', className='alignleft'),
+                    html.Div(children=f'{genres1}', className='alignright'),
+                    html.Div(children=f'{genres2}', className='alignright')],
+                    style={'clear': 'both'})
+            else:
+                genres = ', '.join([elem['name'] for elem in list_genres])
+                genres_div = html.Div(children=[
+                    html.Div(children='Genres:', className='alignleft'),
+                    html.Div(children=f'{genres}', className='alignright')],
+                    style={'clear': 'both'})
+            homepage = item_json[get_movie_info.MovieJsonKeys.homepage]
+            if homepage is None:
+                homepage_div = html.Div('Homepage: N/A')
+            else:
+                homepage_div = html.Div(['Homepage: ',
+                                         html.A(children=homepage,
+                                                href=homepage,
+                                                style={'color': 'white'})])
+            release_date = item_json[get_movie_info.MovieJsonKeys.release_date]
+            popularity = item_json[get_movie_info.MovieJsonKeys.popularity]
+            runtime = item_json[get_movie_info.MovieJsonKeys.runtime]
+        except (TypeError, KeyError):
+            continue
         result.append(
             html.Div([
                 html.Div(
                     id='movie_title_{}'.format(item_index),
                     children=name,
                     style={
+                        'font-size': '15px',
                         'margin': '5px',
                         'textAlign': 'center',
                         'color': colors['text']}),
@@ -54,30 +73,29 @@ def add_final_movies(zipped_list):
                                        children=html.Div(
                                            className='text',
                                            children=f'Movie overview: {overview}',
-                                           style={'font-size': '12px'}),
+                                           style={'font-size': '13px'}),
                                        style={'transform': 'translate(-2.5%, -100%)'})]),
-                html.Details(children=[html.Summary(children='Movie Detail'),
-                                       html.Div(children=[
-                                           html.Div(children=f'Average vote: {vote_average}'),
-                                           html.Div(children=f'Genres: {genres}'),
-                                           homepage_div,
-                                           html.Div(children=f'Release Date: {release_date}'),
-                                           html.Div(children=f'Popularity: {popularity}'),
-                                           html.Div(children=f'Runtime: {runtime}')],
-                                           style={'white-space': 'pre-line',
-                                                  'background-color': '#2B60DE',
-                                                  'color': 'white',
-                                                  'padding': '2px 6px',
-                                                  'margin-left': '10%'}
-                                       )])
-            ], style={'margin': '15px', 'width': '30%', 'display': 'inline-block'})
-        )
-    for i in range(num_movie_rate):
-        result.append(
-            dcc.Dropdown(
-                id='rating_{}'.format(i),
-                options=[{'label': str(i), 'value': i} for i in np.arange(0, 5.5, 0.5)],
-                placeholder="Please select a rating",
-                style={'display': 'none'}))
+                html.Div(children=[
+                    html.Div(children=[
+                        html.Div(children='Average vote:', className='alignleft'),
+                        html.Div(f'{vote_average}', className='alignright')],
+                        style={'clear': 'both'}),
+                    genres_div,
+                    html.Div(children=[
+                        html.Div(children='Release Date: ', className='alignleft'),
+                        html.Div(children=f'{release_date}', className='alignright')],
+                        style={'clear': 'both'}),
+                    html.Div(children=[
+                        html.Div(children='Popularity: ', className='alignleft'),
+                        html.Div(children=f'{popularity}', className='alignright')],
+                        style={'clear': 'both'}),
+                    html.Div(children=[
+                        html.Div(children='Runtime: ', className='alignleft'),
+                        html.Div(children=f'{runtime}', className='alignright')],
+                        style={'clear': 'both'})],
+                    style={'width': '90%',
+                           'margin-left': '5%',
+                           'margin-right': '5%'}
+                )
+        ], style={'margin': '15px', 'margin-top': '80px', 'width': '30%', 'display': 'inline-block'}))
     return result
-

@@ -20,7 +20,7 @@ num_final_recommend = 10
 
 colors = {
     'background': '#111111',
-    'text': '#000080'
+    'text': '#000000'
 }
 
 filter_options = ['Genre', 'Year', 'Country', 'Director', 'Actors']
@@ -83,15 +83,18 @@ def add_popularity_filter():
     for f in filter_options:
         filter_drop_down.append(html.Div(
             children=[
-                html.Div("Please Select a {}".format(f),
+                html.Div(str(f),
                          style={'text-align': 'center',
-                                'font-size': '12px'}),
+                                'font-size': '14px',
+                                'margin-bottom': '20px'}),
                 dcc.Dropdown(
                     id=f,
                     options=get_option(f),
                     value="All",
                     # multi=True,
-                    placeholder="Please select a " + str(f))],
+                    style={'text-align': 'left',
+                           'font-size': '12px'},
+                    placeholder="Select a " + str(f))],
             style={
                 'width': '15%',
                 'margin-left': '4%',
@@ -101,15 +104,18 @@ def add_popularity_filter():
                 'color': colors['text']}))
 
     app_popularity_tab = html.Div(children=[])
-    app_popularity_tab.children.append(html.Div(filter_drop_down, style={'margin-top': '50px'}))
-    filter_button_div = html.Div(html.Button(id='popularity_filter_button', children='Filter'),
+    app_popularity_tab.children.append(html.Div(html.H1('Simple Filtering'),
+                                                className='wrap'))
+    app_popularity_tab.children.append(html.Div(filter_drop_down, style={'margin-top': '10px'}))
+    filter_button_div = html.Div(html.Button(id='popularity_filter_button',
+                                             children='Filter',
+                                             style={'font-size': '13px'}),
                                  style={'margin-top': '50px',
-                                        'margin-bottom': '100px',
+                                        'margin-bottom': '20px',
                                         'width': '40%',
                                         'padding-left': '45%',
                                         'padding-right': '15%'})
     app_popularity_tab.children.append(filter_button_div)
-    app_popularity_tab.children.append(html.Div("List of movies:"))
     app_popularity_tab.children.append(html.Div(id='popularity_main_div', children=movie_div))
     return app_popularity_tab
 
