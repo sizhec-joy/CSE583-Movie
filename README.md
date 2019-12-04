@@ -62,26 +62,36 @@ Our dataset contains 5 main files:
 
 ## Component Specification
 
-**(a). Data manager:**
+**(a). Simple Filter:**
 
-**What it does:** Based on user’s input of different movie attributes (e.g. director, release year, language, etc.), filter out movies from the whole movie dataset.
+**What it does:** Based on user’s input of different movie attributes (e.g. director, release year, language, etc.), filter out movies that satisfy the specific conditions and get recommended movies among them.
 
-**Inputs it requires:** Pick movie attributes from Dropdown
+**Inputs it requires:** 5 filters (genre/year/country/director/actor)
 
-**Outputs it provides:** A subset of movies satisfying user picked attributes
+**Outputs it provides:** A data frame of top 10 movies based on weighted ratings
 
-**(b). Visualization manager:** 
+**(b). Content-based Filter:** 
+
+**What it does:** Recommend movies based on a specific movie
+
+**Inputs it requires:** A  movie title
+
+**Outputs it provides:** A data frame of top 10 movies based on similarities to the given movie
+
+**(c). User-based Filter:** 
+
+**What it does:** Recommend movies to a specific user
+
+**Inputs it requires:** A  user id
+
+**Outputs it provides:** A data frame of 10 movies with top predicted ratings
+
+**(d). Visualization manager:** 
 
 **What it does:** Display information (poster, movie overview, average rating, etc.)  of filtered or recommended movies in a user interface.
 
-**Inputs it requires:** None
+**Inputs it requires:** A data frame of recommended movies
 
-**Outputs it provides:** ![img](https://lh3.googleusercontent.com/92ne2UboVFU89ka2z93iO7TIF2E2Jx9nYQ4pKzIyV29uliIwOFAjIu37NxRVmOl7q3Cnu_hKYWq8slQCoNj5F7bdjkTP3M1h8B8yqanD4WAbP8dArlCTWDqC6-fQrnXPz1WHDi1D)
+**Outputs it provides:** A website displays the recommended movies with names, posters and introductions
+![img](https://lh3.googleusercontent.com/92ne2UboVFU89ka2z93iO7TIF2E2Jx9nYQ4pKzIyV29uliIwOFAjIu37NxRVmOl7q3Cnu_hKYWq8slQCoNj5F7bdjkTP3M1h8B8yqanD4WAbP8dArlCTWDqC6-fQrnXPz1WHDi1D)
 
-**(c). Prediction manager:** 
-
-**What it does:** Predicting rating and popularity of a movie based on input information
-
-**Inputs it requires:** Cast, country, crew, category, company, budget, runtime etc.
-
-**Outputs it provides:** Predicted rating and popularity of a movie based on input information. 
