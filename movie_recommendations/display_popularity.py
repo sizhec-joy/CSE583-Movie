@@ -74,7 +74,7 @@ def get_option(filter_option):
 def add_popularity_filter():
     movie_div = display_final_movie.add_final_movies(
         zip(range(NUM_FINAL_RECOMMEND),
-            global_record.initial_movie_id_list[10:(10 + NUM_FINAL_RECOMMEND)]))
+            global_record.INITIAL_MOVIE_ID_LIST[10:(10 + NUM_FINAL_RECOMMEND)]))
     filter_drop_down = []
     for filter_option in FILTER_OPTIONS:
         filter_drop_down.append(html.Div(

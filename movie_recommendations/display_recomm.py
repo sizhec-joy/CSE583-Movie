@@ -42,8 +42,8 @@ def main():
     this is the main function
     '''
     movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
-                                                         global_record.initial_movie_id_list[10:(10+num_final_recommend)]))
-    global_record.set_curr_movie_id_list(global_record.initial_movie_id_list)
+                                                         global_record.INITIAL_MOVIE_ID_LIST[10:(10 + num_final_recommend)]))
+    global_record.set_curr_movie_id_list(global_record.INITIAL_MOVIE_ID_LIST)
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a user ID',

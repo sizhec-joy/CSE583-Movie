@@ -45,7 +45,7 @@ for val in NAME_SET:
 
 def add_search_bar():
     movie_div = display_final_movie.add_final_movies(zip(range(NUM_FINAL_RECOMMEND),
-                                                         global_record.initial_movie_id_list[10:(10+NUM_FINAL_RECOMMEND)]))
+                                                         global_record.INITIAL_MOVIE_ID_LIST[10:(10 + NUM_FINAL_RECOMMEND)]))
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a movie',
