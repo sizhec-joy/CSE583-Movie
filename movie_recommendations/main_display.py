@@ -23,7 +23,7 @@ from dash.dependencies import Input, Output, State
 import movie_recommendations.grab_list
 from simple_recommender import SimpleRecommendation
 from content_based import ContentRecommendation
-from app import app
+from app import APP
 from grab_list import object_save
 from userbased_filtering import Collaborative
 import display_popularity
@@ -103,13 +103,13 @@ CONTENT = dcc.Loading(id="loading-page-main",
                       fullscreen=True,
                       color='#2B60DE')
 
-app.layout = html.Div([dcc.Location(id="url"), SIDEBAR, CONTENT])
+APP.layout = html.Div([dcc.Location(id="url"), SIDEBAR, CONTENT])
 
 
 # this callback uses the current pathname to set the active state of the
 # corresponding nav link to true, allowing users to tell see page they are on
 PAGENAMES = ['simple-filtering', 'content-based-filtering', 'user-based-filtering']
-@app.callback(
+@APP.callback(
     [Output(f"page-{page_name}-link", "active") for page_name in PAGENAMES],
     [Input("url", "pathname")],
 )
@@ -123,7 +123,7 @@ def toggle_active_links(pathname):
     return [pathname == f"/page-{page_name}" for page_name in PAGENAMES]
 
 
-@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+@APP.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     '''
     this is the render function
@@ -155,7 +155,7 @@ display_content_base.call_back_filter()
 display_recomm.call_back_recom()
 
 
-@app.callback(
+@APP.callback(
     Output("collapse", "is_open"),
     [Input("toggle", "n_clicks")],
     [State("collapse", "is_open")],
@@ -170,4 +170,4 @@ def toggle_collapse(n, is_open):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=False)
+    APP.run_server(debug=False)

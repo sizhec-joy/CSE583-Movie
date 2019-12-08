@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import numpy as np
 import grab_list
-from app import app
+from app import APP
 import display_final_movie
 import global_record
 from simple_recommender import SimpleRecommendation
@@ -118,7 +118,7 @@ def add_popularity_filter():
 
 def call_back_popularity_filter():
     list_state = [State(f'{f}', 'value') for f in FILTER_OPTIONS]
-    @app.callback(
+    @APP.callback(
         Output('popularity_main_div', 'children'),
         [Input('popularity_filter_button', 'n_clicks')],
         list_state)

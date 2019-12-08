@@ -10,7 +10,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import numpy as np
-from app import app
+from app import APP
 import global_record
 import grab_list
 import display_final_movie
@@ -82,7 +82,7 @@ def call_back_recom():
     '''
     list_state = [State('user_id_dropdown', 'value')]
 
-    @app.callback(
+    @APP.callback(
         Output('recommend_main_div', 'children'),
         [Input('user_id_button', 'n_clicks')],
         list_state)

@@ -5,7 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from content_based import ContentRecommendation
-from app import app
+from app import APP
 import display_final_movie
 import global_record
 import grab_list
@@ -79,7 +79,7 @@ def add_search_bar():
 
 def call_back_filter():
     list_state = [State('movie_search_dropdown', 'value')]
-    @app.callback(
+    @APP.callback(
         Output('content_base_main_div', 'children'),
         [Input('search_similar_button', 'n_clicks')],
         list_state)
