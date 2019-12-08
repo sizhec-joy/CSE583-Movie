@@ -1,13 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-import pandas as pd
-import numpy as np
-from ast import literal_eval
-import ast
-import surprise
-from surprise import Reader, Dataset, SVD, model_selection
 import pickle
 import os.path
+import ast
+import pandas as pd
+from surprise import Reader, Dataset, SVD, model_selection
 
 Run = False
 
@@ -20,43 +15,43 @@ if not os.path.isfile('cop.txt'):
     print('process file cop')
 
 if Run:
-    md = pd. read_csv('movies_metadata.csv')
-    ratings = pd.read_csv('ratings.csv')
-    links = pd.read_csv('links.csv')
-    links = links[links['tmdbId'].notnull()]['tmdbId'].astype('int')
+    META = pd.read_csv('movies_metadata.csv')
+    RATINGS = pd.read_csv('ratings.csv')
+    LINKS = pd.read_csv('links.csv')
+    LINKS = LINKS[LINKS['tmdbId'].notnull()]['tmdbId'].astype('int')
 
-    md = md.drop([19730, 29503, 35587])
-    md = md[md['release_date'].notnull()]
-    md['id'] = md['id'].astype('int')
+    META = META.drop([19730, 29503, 35587])
+    META = META[META['release_date'].notnull()]
+    META['id'] = META['id'].astype('int')
 
-    full_md = md[md['id'].isin(links)]
+    FULL_META = META[META['id'].isin(LINKS)]
 
-def get_genre(df):
+def get_genre(dataframe):
     """
     This function is to get information about genres
     Input: dataframe
     Output: list
     """
     genres = []
-    for n in range(len(df)):
+    for row_number in range(len(dataframe)):
         genre = []
-        for id_name in ast.literal_eval(df.genres.to_list()[n]):
+        for id_name in ast.literal_eval(dataframe.genres.to_list()[row_number]):
             genre.append(id_name['name'])
         genres.append(genre)
     return genres
 
-def get_year(df):
+def get_year(dataframe):
     """
     This function is to get information about years
     Input: dataframe
     Output: list
     """
     years = []
-    for date in df.release_date.to_list():
+    for date in dataframe.release_date.to_list():
         years.append(date.split('-')[0])
     return years
 
-def get_countries(df):
+def get_countries(dataframe):
     """
     This function is to get information about countries
     Full names of countries are adopted
@@ -64,71 +59,73 @@ def get_countries(df):
     Output: list
     """
     countries = []
-    for n in range(len(df)):
+    for row_number in range(len(dataframe)):
         country = []
-        for countryinfo in ast.literal_eval(df.production_countries.to_list()[n]):
+        for countryinfo in ast.literal_eval(dataframe.production_countries.to_list()[row_number]):
             country.append(countryinfo['name'])
         countries.append(country)
     return countries
 
 if Run:
-    full_md['genres'] = get_genre(full_md)
-    full_md['year'] = get_year(full_md)
-    full_md['countries'] = get_countries(full_md)
+    FULL_META['genres'] = get_genre(FULL_META)
+    FULL_META['year'] = get_year(FULL_META)
+    FULL_META['countries'] = get_countries(FULL_META)
 
-    reader = Reader()
-    data = Dataset.load_from_df(ratings[['userId', 'movieId', 'rating']], reader)
-    svd = SVD()
-    model_selection.cross_validate(svd, data, measures=['RMSE', 'MAE'], cv = 5)
+    READER = Reader()
+    DATA = Dataset.load_from_df(RATINGS[['userId', 'movieId', 'rating']], READER)
+    SVD = SVD()
+    model_selection.cross_validate(SVD, DATA, measures=['RMSE', 'MAE'], cv=5)
 
-    trainset = data.build_full_trainset()
-    svd.fit(trainset)
+    TRAINSET = DATA.build_full_trainset()
+    SVD.fit(TRAINSET)
 
-    movie_id_sort = sorted(set(ratings.movieId))
+    MOVIE_ID_SORT = sorted(set(RATINGS.movieId))
 
 def get_recommended_movies(user_id):
     '''
     Input: user id (integer)
     Output: A dataframe contains 10 recommended movies (information about these movie included)
     '''
-    already_watched = list(ratings[ratings['userId'] == user_id]['movieId'])
+    already_watched = list(RATINGS[RATINGS['userId'] == user_id]['movieId'])
     predicted_est = {}
     id_set = []
-    for i in movie_id_sort:
+    for i in MOVIE_ID_SORT:
         if i not in already_watched:
-            predicted_est[i] = svd.predict(user_id, i).est
+            predicted_est[i] = SVD.predict(user_id, i).est
         else:
             predicted_est[i] = 0
-    predicted_est = sorted(predicted_est.items(), key = lambda x:x[1], reverse = True)
+    predicted_est = sorted(predicted_est.items(), key=lambda x: x[1], reverse=True)
     for i in predicted_est:
         if len(id_set) < 10:
-            if i[0] in full_md['id'].to_list():
+            if i[0] in FULL_META['id'].to_list():
                 id_set.append(i[0])
-    recommendation = full_md[full_md['id'].isin(id_set)][['title','id']].values.tolist()
+    recommendation = FULL_META[FULL_META['id'].isin(id_set)][['title', 'id']].values.tolist()
     return recommendation
 
-
-class collaborative:
-    def __init__(self, user_recommendation_dic):
-        self.user_recommendation_dic = dic
-
 def save_recommendation_file():
+    '''
+    save recommendation result
+    '''
     dic = {'0': [0]}
     for i in range(467):
-        print('creating recommendation for ' )
+        print('creating recommendation for ')
         print(i)
         print('\n')
         recommendation = get_recommended_movies(i)
         #print(recommendation.index.values)
-        titles  = recommendation['title'].values.tolist()
+        titles = recommendation['title'].values.tolist()
         dic[i] = titles
     return dic
 
-if Run:
-    dic = save_recommendation_file()
-    cop = collaborative(dic)
-    file = open('cop.txt','wb')
-    pickle.dump(cop, file)
+class Collaborative:
+    '''
+    User_based recommendation
+    '''
+    def __init__(self, user_recommendation_dic):
+        self.user_recommendation_dic = DIC
 
-# Futurework1:
-# If we recommend movies just based on the similarity between regardless of ratings and popularity, we'll recommend bad movies to users. Thus we can build a machanism to filter bad movies combined with the content recommender system.
+if Run:
+    DIC = save_recommendation_file()
+    COLLA = Collaborative(DIC)
+    FILE = open('cop.txt', 'wb')
+    pickle.dump(COLLA, FILE)

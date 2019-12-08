@@ -1,4 +1,9 @@
+"""
+Unit test for content_based.py
+"""
+
 import unittest
+import movie_recommendations.content_based as content_based
 
 
 class MyTestCase(unittest.TestCase):
@@ -16,7 +21,7 @@ if __name__ == '__main__':
 # Output: A dataframe contains 10 recommended movies (information about these movie included)
 # Here users input a movie name, we use the "get_recommended_movies" function in module Content to give output.
 
-import movie_recommendations.content_based as Content
+
 
 print(Content.get_recommended_movies('The Dark Knight'))
 
