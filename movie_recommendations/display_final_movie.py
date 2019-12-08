@@ -10,11 +10,14 @@ colors = {
     'background': '#111111',
     'text': '#000000'
 }
-num_movie_rate = 8
-num_final_recommend = 10
 
 
 def get_info(item_json):
+    """
+    get movie information from the json return from the API
+    :param item_json: a movie information json from the TMDB API
+    :return: name, poster, overview, vote_average, release_date, runtime, popularity, genres_div of the movie
+    """
     name = item_json[get_movie_info.MovieJsonKeys.name]
     poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
     overview = item_json[get_movie_info.MovieJsonKeys.overview]
@@ -41,6 +44,12 @@ def get_info(item_json):
 
 
 def add_final_movies(zipped_list):
+    """
+    integrate the name, poster, overview, vote_average, release_date, runtime, popularity, genres_div of a movie into
+    a html div, which can be display in the front end
+    :param zipped_list: a list of movie ids with their corresponding indices being 1, 2, ..., # of movie ids in the list
+    :return: a html div to be displayed
+    """
     result = []
     for item in zipped_list:
         item_index = item[0]
