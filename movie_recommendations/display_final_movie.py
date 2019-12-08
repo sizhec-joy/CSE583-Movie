@@ -1,12 +1,10 @@
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
+"""
+This file is a helper function to add movie html div to front end display
+"""
 import dash_html_components as html
-import numpy as np
 import get_movie_info
-from app import app
-from dash.dependencies import Input, Output, State
 
-colors = {
+COLORS = {
     'background': '#111111',
     'text': '#000000'
 }
@@ -16,7 +14,8 @@ def get_info(item_json):
     """
     get movie information from the json return from the API
     :param item_json: a movie information json from the TMDB API
-    :return: name, poster, overview, vote_average, release_date, runtime, popularity, genres_div of the movie
+    :return: name, poster, overview, vote_average,
+             release_date, runtime, popularity, genres_div of the movie
     """
     name = item_json[get_movie_info.MovieJsonKeys.name]
     poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
@@ -30,13 +29,13 @@ def get_info(item_json):
             html.Div(children='Genres:', className='alignleft'),
             html.Div(children=f'{genres1}', className='alignright'),
             html.Div(children=f'{genres2}', className='alignright')],
-            style={'clear': 'both'})
+                              style={'clear': 'both'})
     else:
         genres = ', '.join([elem['name'] for elem in list_genres])
         genres_div = html.Div(children=[
             html.Div(children='Genres:', className='alignleft'),
             html.Div(children=f'{genres}', className='alignright')],
-            style={'clear': 'both'})
+                              style={'clear': 'both'})
     release_date = item_json[get_movie_info.MovieJsonKeys.release_date]
     popularity = item_json[get_movie_info.MovieJsonKeys.popularity]
     runtime = item_json[get_movie_info.MovieJsonKeys.runtime]
@@ -45,9 +44,11 @@ def get_info(item_json):
 
 def add_final_movies(zipped_list):
     """
-    integrate the name, poster, overview, vote_average, release_date, runtime, popularity, genres_div of a movie into
+    integrate the name, poster, overview, vote_average,
+    release_date, runtime, popularity, genres_div of a movie into
     a html div, which can be display in the front end
-    :param zipped_list: a list of movie ids with their corresponding indices being 1, 2, ..., # of movie ids in the list
+    :param zipped_list: a list of movie ids with their corresponding
+           indices being 1, 2, ..., # of movie ids in the list
     :return: a html div to be displayed
     """
     result = []
@@ -56,7 +57,8 @@ def add_final_movies(zipped_list):
         item_movie_id = item[1]
         item_json = get_movie_info.get_movie_json(item_movie_id)
         try:
-            name, poster, overview, vote_average, release_date, runtime, popularity, genres_div = get_info(item_json)
+            name, poster, overview, vote_average, release_date, \
+            runtime, popularity, genres_div = get_info(item_json)
         except (TypeError, KeyError):
             continue
         result.append(
@@ -68,7 +70,7 @@ def add_final_movies(zipped_list):
                         'font-size': '15px',
                         'margin': '5px',
                         'textAlign': 'center',
-                        'color': colors['text']}),
+                        'color': COLORS['text']}),
                 html.Div(
                     className='container',
                     children=[html.Img(className='image',
@@ -85,23 +87,25 @@ def add_final_movies(zipped_list):
                     html.Div(children=[
                         html.Div(children='Average vote:', className='alignleft'),
                         html.Div(f'{vote_average}', className='alignright')],
-                        style={'clear': 'both'}),
+                             style={'clear': 'both'}),
                     genres_div,
                     html.Div(children=[
                         html.Div(children='Release Date: ', className='alignleft'),
                         html.Div(children=f'{release_date}', className='alignright')],
-                        style={'clear': 'both'}),
+                             style={'clear': 'both'}),
                     html.Div(children=[
                         html.Div(children='Popularity: ', className='alignleft'),
                         html.Div(children=f'{popularity}', className='alignright')],
-                        style={'clear': 'both'}),
+                             style={'clear': 'both'}),
                     html.Div(children=[
                         html.Div(children='Runtime: ', className='alignleft'),
                         html.Div(children=f'{runtime}', className='alignright')],
-                        style={'clear': 'both'})],
-                    style={'width': '90%',
-                           'margin-left': '5%',
-                           'margin-right': '5%'}
-                )
-        ], style={'margin': '15px', 'margin-top': '80px', 'width': '30%', 'display': 'inline-block'}))
+                             style={'clear': 'both'})],
+                         style={'width': '90%',
+                                'margin-left': '5%',
+                                'margin-right': '5%'})],
+                     style={'margin': '15px',
+                            'margin-top': '80px',
+                            'width': '30%',
+                            'display': 'inline-block'}))
     return result
