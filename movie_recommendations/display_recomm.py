@@ -1,35 +1,32 @@
-import pandas as pd
+'''
+this is a display module
+'''
 from ast import literal_eval
 from collections import defaultdict
+import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-
+import numpy as np
 from app import app
 import global_record
 import grab_list
-import numpy as np
-import pickle
 import display_final_movie
 
-colors = {
+COLORS = {
     'background': '#111111',
     'text': '#000080'
 }
 num_final_recommend = 10
-
-# file = open('cop.txt', 'rb')
-# cop = pickle.load(file)
-
-cop = defaultdict(list)
+COP = defaultdict(list)
 df = pd.read_csv('../movies-dataset/source/collaborative_result.csv',
                  header=None, index_col=0, converters={1: literal_eval})
 for row in df.iterrows():
     # print([item for item in row[1][0]])
     tmp_list = list(row[1])
-    cop[int(row[0])] = [item[0] for item in tmp_list[0]]
+    COP[int(row[0])] = [item[0] for item in tmp_list[0]]
 
 obs = grab_list.read_csv()
 id_set = obs.id_set
@@ -41,6 +38,9 @@ user_val.extend([{'label': str(i), 'value': i} for i in np.arange(1, 467, 1)])
 
 
 def main():
+    '''
+    this is the main function
+    '''
     movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
                                                          global_record.initial_movie_id_list[10:(10+num_final_recommend)]))
     global_record.set_curr_movie_id_list(global_record.initial_movie_id_list)
@@ -77,6 +77,9 @@ def main():
 
 
 def call_back_recom():
+    '''
+    this is the call back function
+    '''
     list_state = [State('user_id_dropdown', 'value')]
 
     @app.callback(
@@ -94,8 +97,8 @@ def call_back_recom():
             user_id = int(list_filter[0])
             print(user_id)
             list_next_movie_id = []
-            movie_names = cop[user_id]
-            # movie_names = cop.user_recommendation_dic[user_id]
+            movie_names = COP[user_id]
+            # movie_names = COP.user_recommendation_dic[user_id]
             for mn in movie_names:
                 print(mn)
                 if mn in id_title_set:
