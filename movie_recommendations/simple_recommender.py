@@ -13,6 +13,7 @@ if __name__ == "__main__":
     Run = True
     print("process file sp")
 
+
 # functions to extract certain information in the data
 def get_genre(dataframe):
     """
@@ -27,6 +28,7 @@ def get_genre(dataframe):
             genre.append(id_name['name'])
         genres.append(genre)
     return genres
+
 
 def get_director(dataframe):
     """
@@ -44,6 +46,7 @@ def get_director(dataframe):
         directors.append(director)
     return directors
 
+
 def get_cast(dataframe):
     """
     This function is to get information about actors
@@ -58,6 +61,7 @@ def get_cast(dataframe):
         casts.append(cast)
     return casts
 
+
 def get_year(dataframe):
     """
     This function is to get information about years
@@ -68,6 +72,7 @@ def get_year(dataframe):
     for date in dataframe.release_date.to_list():
         years.append(date.split('-')[0])
     return years
+
 
 def get_countries(dataframe):
     """
@@ -83,6 +88,7 @@ def get_countries(dataframe):
             country.append(country_info['name'])
         countries.append(country)
     return countries
+
 
 def weighted_rating(dataframe, mean_value, quantile_value):
     """
@@ -129,6 +135,7 @@ class simple_recommendation:
         self.meta_data_new = self.meta_data_new.join(col_director)
         self.meta_data_new = self.meta_data_new.join(col_actor)
         self.meta_data_new = self.meta_data_new.join(col_country)
+
     def get_recommended_movies(self, constraints, percentile=0.8):
         constraint_names = ['genre', 'year', 'country', 'director', 'actor']
         data_frame = self.meta_data_new
