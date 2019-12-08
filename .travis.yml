@@ -1,0 +1,22 @@
+language: python
+
+branches:
+    only:
+        - master
+
+install:
+    - pip install coverage
+    - pip install coveralls
+    - pip install flake8
+    - pip install -r requirements.txt
+
+before_script:
+    - "flake8 movie_recommendations"
+
+script:
+    - coverage run -m unittest discover
+
+# generate a coverage report to send to back to user
+after_success:
+    - coverage report
+    - coveralls
