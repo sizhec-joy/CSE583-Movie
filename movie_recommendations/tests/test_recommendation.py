@@ -14,7 +14,7 @@ class TestSimpleRecommender(unittest.TestCase):
     Should test if the output is adequate.
     """
     def setUp(self):
-        self.recommender = simple_recommender.simple_recommendation()
+        self.recommender = simple_recommender.SimpleRecommendation()
         self.test_filter = ['Romance', '1996', 'United States of America', 'Quentin Tarantino', 'Brad Pitt']
 
     def test_genres(self):
