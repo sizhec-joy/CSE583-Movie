@@ -164,7 +164,7 @@ def read_csv_c():
     '''
     this is a function
     '''
-    with open('movies_metadata.csv', mode='r', encoding='utf-8') as csv_file:
+    with open('./movies-dataset/movies_metadata.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             process_genre(row)
@@ -173,7 +173,7 @@ def read_csv_c():
             process_id(row)
             process_title_id(row)
 
-    with open('credits.csv', mode='r', encoding='utf-8') as csv_file:
+    with open('./movies-dataset/credits.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             process_director(row)
