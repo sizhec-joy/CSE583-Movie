@@ -14,6 +14,32 @@ num_movie_rate = 8
 num_final_recommend = 10
 
 
+def get_info(item_json):
+    name = item_json[get_movie_info.MovieJsonKeys.name]
+    poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
+    overview = item_json[get_movie_info.MovieJsonKeys.overview]
+    vote_average = item_json[get_movie_info.MovieJsonKeys.vote_average]
+    list_genres = item_json[get_movie_info.MovieJsonKeys.genres]
+    if len(list_genres) > 5:
+        genres1 = ', '.join([elem['name'] for elem in list_genres[:4]]) + ','
+        genres2 = ', '.join([elem['name'] for elem in list_genres[4:]])
+        genres_div = html.Div(children=[
+            html.Div(children='Genres:', className='alignleft'),
+            html.Div(children=f'{genres1}', className='alignright'),
+            html.Div(children=f'{genres2}', className='alignright')],
+            style={'clear': 'both'})
+    else:
+        genres = ', '.join([elem['name'] for elem in list_genres])
+        genres_div = html.Div(children=[
+            html.Div(children='Genres:', className='alignleft'),
+            html.Div(children=f'{genres}', className='alignright')],
+            style={'clear': 'both'})
+    release_date = item_json[get_movie_info.MovieJsonKeys.release_date]
+    popularity = item_json[get_movie_info.MovieJsonKeys.popularity]
+    runtime = item_json[get_movie_info.MovieJsonKeys.runtime]
+    return name, poster, overview, vote_average, release_date, runtime, popularity, genres_div
+
+
 def add_final_movies(zipped_list):
     result = []
     for item in zipped_list:
@@ -21,36 +47,7 @@ def add_final_movies(zipped_list):
         item_movie_id = item[1]
         item_json = get_movie_info.get_movie_json(item_movie_id)
         try:
-            name = item_json[get_movie_info.MovieJsonKeys.name]
-            poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
-            overview = item_json[get_movie_info.MovieJsonKeys.overview]
-            vote_average = item_json[get_movie_info.MovieJsonKeys.vote_average]
-            list_genres = item_json[get_movie_info.MovieJsonKeys.genres]
-            if len(list_genres) > 5:
-                genres1 = ', '.join([elem['name'] for elem in list_genres[:4]])+','
-                genres2 = ', '.join([elem['name'] for elem in list_genres[4:]])
-                genres_div = html.Div(children=[
-                    html.Div(children='Genres:', className='alignleft'),
-                    html.Div(children=f'{genres1}', className='alignright'),
-                    html.Div(children=f'{genres2}', className='alignright')],
-                    style={'clear': 'both'})
-            else:
-                genres = ', '.join([elem['name'] for elem in list_genres])
-                genres_div = html.Div(children=[
-                    html.Div(children='Genres:', className='alignleft'),
-                    html.Div(children=f'{genres}', className='alignright')],
-                    style={'clear': 'both'})
-            homepage = item_json[get_movie_info.MovieJsonKeys.homepage]
-            if homepage is None:
-                homepage_div = html.Div('Homepage: N/A')
-            else:
-                homepage_div = html.Div(['Homepage: ',
-                                         html.A(children=homepage,
-                                                href=homepage,
-                                                style={'color': 'white'})])
-            release_date = item_json[get_movie_info.MovieJsonKeys.release_date]
-            popularity = item_json[get_movie_info.MovieJsonKeys.popularity]
-            runtime = item_json[get_movie_info.MovieJsonKeys.runtime]
+            name, poster, overview, vote_average, release_date, runtime, popularity, genres_div = get_info(item_json)
         except (TypeError, KeyError):
             continue
         result.append(
