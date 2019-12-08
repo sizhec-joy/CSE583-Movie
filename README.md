@@ -52,5 +52,7 @@ This project aims to recommend tailored movie information to users based on thei
 
 ## How to use
 1.Clone the repository.
+
 2.Run main_display.py and obtain the url.
+
 3.Run the url in your browser and get to the user's interface.
