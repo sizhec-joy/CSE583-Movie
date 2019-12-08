@@ -15,17 +15,17 @@ links.
 For more details on building multi-page Dash applications, check out the Dash
 documentation: https://dash.plot.ly/urls
 """
-import grab_list
+import movie_recommendations.grab_list
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
-from Simple_Recommender import simple_recommendation
-from Content import content_recommendation
+from simple_recommender import SimpleRecommendation
+from content_based import ContentRecommendation
 from app import app
 from grab_list import object_save
-from Collaborative import collaborative
+from userbased_filtering import Collaborative
 import display_popularity
 import display_content_base
 import display_recomm

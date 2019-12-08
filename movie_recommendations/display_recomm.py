@@ -24,21 +24,12 @@ num_final_recommend = 10
 # cop = pickle.load(file)
 
 cop = defaultdict(list)
-df = pd.read_csv('../../collaborative_result.csv', header=None, index_col=0, converters={1: literal_eval})
+df = pd.read_csv('../movies-dataset/source/collaborative_result.csv',
+                 header=None, index_col=0, converters={1: literal_eval})
 for row in df.iterrows():
     # print([item for item in row[1][0]])
     tmp_list = list(row[1])
     cop[int(row[0])] = [item[0] for item in tmp_list[0]]
-
-# with open('../../collaborative_result.csv', mode='r', encoding='utf-8') as csv_file:
-#     csv_reader = csv.reader(csv_file)
-#     line_count = 0
-#     for row in csv_reader:
-#         print(row)
-#         cop[int(row[0])] = [item[0] for item in row[1]]
-#         print(cop[int(row[0])])
-#         # cop[row[0]] = [item[0] for item in row[1]]
-
 
 obs = grab_list.read_csv()
 id_set = obs.id_set
@@ -66,11 +57,6 @@ def main():
                 style={'font-size': '13px',
                        'width': '100%'}
             ))
-            # html.Div(dcc.Dropdown(
-            #     id='user_id_dropdown',
-            #     options=user_val,
-            #     # multi=True,
-            #     placeholder="Please select/type a user id"))
         ]
     )
     search_button_div = html.Div(html.Button(id='user_id_button',

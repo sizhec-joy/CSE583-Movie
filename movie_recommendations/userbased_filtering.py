@@ -15,9 +15,9 @@ if not os.path.isfile('cop.txt'):
     print('process file cop')
 
 if Run:
-    META = pd.read_csv('movies_metadata.csv')
-    RATINGS = pd.read_csv('ratings.csv')
-    LINKS = pd.read_csv('links.csv')
+    META = pd.read_csv('../movies-dataset/movies_metadata.csv')
+    RATINGS = pd.read_csv('../movies-dataset/ratings.csv')
+    LINKS = pd.read_csv('../movies-dataset/links.csv')
     LINKS = LINKS[LINKS['tmdbId'].notnull()]['tmdbId'].astype('int')
 
     META = META.drop([19730, 29503, 35587])

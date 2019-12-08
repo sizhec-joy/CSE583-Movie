@@ -4,7 +4,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import numpy as np
-from Content import content_recommendation
+from content_based import ContentRecommendation
 from app import app
 import display_final_movie
 import global_record

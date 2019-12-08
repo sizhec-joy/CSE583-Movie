@@ -24,7 +24,7 @@ if not os.path.isfile('CP.txt'):
 
 
 if Run:
-    MD = pd.read_csv('movies_metadata.csv')
+    MD = pd.read_csv('../movies-dataset/movies_metadata.csv')
     MD['genres'] = MD['genres'].fillna('[]')
     MD['genres'] = MD['genres'].apply(literal_eval)
     MD['genres'] = MD['genres'].apply(lambda x: [i['name'] for i in x] if isinstance(x, list) else [])
@@ -34,7 +34,7 @@ if Run:
     M = VOTE_COUNTS.quantile(0.95)
     MD['year'] = pd.to_datetime(MD['release_date'], errors='coerce')
     MD['year'] = MD['year'].apply(lambda x: str(x).split('-')[0] if x != numpy.nan else numpy.nan)
-    LINKS = pd.read_csv('LINKS.csv')
+    LINKS = pd.read_csv('../movies-dataset/links.csv')
     LINKS = LINKS[LINKS['tmdbId'].notnull()]['tmdbId'].astype('int')
 
     MD = MD.drop([19730, 29503, 35587])
@@ -44,10 +44,10 @@ if Run:
 
 
     # Build a content based recommender system based on a combination of movie cast, crew, keywords, genre
-    # Here we merge dataset "CREDITS.csv" and dataset "keywords.csv"
+    # Here we merge dataset "credits.csv" and dataset "keywords.csv"
 
-    CREDITS = pd.read_csv('CREDITS.csv')
-    KEYWORDS = pd.read_csv('keywords.csv')
+    CREDITS = pd.read_csv('../movies-dataset/credits.csv')
+    KEYWORDS = pd.read_csv('../movies-dataset/keywords.csv')
 
     KEYWORDS['id'] = KEYWORDS['id'].astype('int')
     CREDITS['id'] = CREDITS['id'].astype('int')

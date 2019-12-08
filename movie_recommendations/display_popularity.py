@@ -8,7 +8,7 @@ import grab_list
 from app import app
 import display_final_movie
 import global_record
-from simple_recommender import simple_recommendation
+from simple_recommender import SimpleRecommendation
 import pickle
 
 file = open('sp.txt','rb')

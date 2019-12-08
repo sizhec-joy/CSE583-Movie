@@ -98,13 +98,13 @@ def weighted_rating(dataframe, mean_value, quantile_value):
     average_vote = dataframe['vote_average']
     return (count_vote / (count_vote + mean_value) * average_vote) + (mean_value / (mean_value + count_vote) * quantile_value)
 
-class simple_recommendation:
+class SimpleRecommendation:
     '''
     This is simple recommedation algorithm.
     '''
     def __init__(self):
-        meta_data = pd.read_csv('movies_metadata.csv')
-        credits = pd.read_csv('credits.csv')
+        meta_data = pd.read_csv('../movies-dataset/movies_metadata.csv')
+        credits = pd.read_csv('../movies-dataset/credits.csv')
         # drop some inappropriate records
         meta_data = meta_data[meta_data['release_date'].notnull()]
         meta_data = meta_data.drop([19730, 29503, 35587])
@@ -160,7 +160,7 @@ class simple_recommendation:
         return recommendation
 
 if Run:
-    SIMPLE = simple_recommendation()
+    SIMPLE = SimpleRecommendation()
     FILE = open('sp.txt', 'wb')
     pickle.dump(SIMPLE, FILE)
 #print(sp.md)
