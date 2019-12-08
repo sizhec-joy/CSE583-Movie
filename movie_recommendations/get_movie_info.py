@@ -1,13 +1,16 @@
+"""
+This file get movie information using API from the TMDB database
+"""
 import http.client
 import json
-from PIL import Image
-import requests
-from io import BytesIO
 
-poster_url_constant = 'http://image.tmdb.org/t/p/w342/'
+POSTER_URL_CONSTANT = 'http://image.tmdb.org/t/p/w342/'
 
 
-class MovieJsonKeys():
+class MovieJsonKeys:
+    """
+    Class to get corresponding json attributes
+    """
     name = 'title'
     overview = 'overview'
     vote_average = 'vote_average'
@@ -21,6 +24,11 @@ class MovieJsonKeys():
 
 
 def get_movie_json(movie_id):
+    """
+    This function return movie information in json format from API
+    :param movie_id: tmbd movie id to get movie information
+    :return: movie information in json format
+    """
     conn = http.client.HTTPSConnection("api.themoviedb.org")
     api_key = '9df6fc65ca74919ab7942a5792785196'
     payload = "{}"

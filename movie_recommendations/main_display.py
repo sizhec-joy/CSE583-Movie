@@ -15,12 +15,12 @@ links.
 For more details on building multi-page Dash applications, check out the Dash
 documentation: https://dash.plot.ly/urls
 """
-import movie_recommendations.grab_list
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
+import movie_recommendations.grab_list
 from simple_recommender import SimpleRecommendation
 from content_based import ContentRecommendation
 from app import app
@@ -29,12 +29,12 @@ from userbased_filtering import Collaborative
 import display_popularity
 import display_content_base
 import display_recomm
-import display_final_movie
+#import display_final_movie
 
 
-# we use the Row and Col components to construct the sidebar header
+# we use the Row and Col components to construct the SIDEBAR header
 # it consists of a title, and a toggle, the latter is hidden on large screens
-sidebar_header = dbc.Row(
+SIDEBARHEADER = dbc.Row(
     [
         dbc.Col(html.H2("Movie Recommender", className="display-5")),
         dbc.Col(
@@ -58,9 +58,9 @@ sidebar_header = dbc.Row(
     ]
 )
 
-sidebar = html.Div(
+SIDEBAR = html.Div(
     [
-        sidebar_header,
+        SIDEBARHEADER,
         # we wrap the horizontal rule and short blurb in a div that can be
         # hidden on a small screen
         html.Div(
@@ -92,36 +92,42 @@ sidebar = html.Div(
             id="collapse",
         ),
     ],
-    id="sidebar",
+    id="SIDEBAR",
 )
 
 
-content = dcc.Loading(id="loading-page-main",
+CONTENT = dcc.Loading(id="loading-page-main",
                       children=[
                           html.Div(id="page-content")],
                       # type='dot',
                       fullscreen=True,
                       color='#2B60DE')
 
-app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+app.layout = html.Div([dcc.Location(id="url"), SIDEBAR, CONTENT])
 
 
 # this callback uses the current pathname to set the active state of the
 # corresponding nav link to true, allowing users to tell see page they are on
-page_names = ['simple-filtering', 'content-based-filtering', 'user-based-filtering']
+PAGENAMES = ['simple-filtering', 'content-based-filtering', 'user-based-filtering']
 @app.callback(
-    [Output(f"page-{page_name}-link", "active") for page_name in page_names],
+    [Output(f"page-{page_name}-link", "active") for page_name in PAGENAMES],
     [Input("url", "pathname")],
 )
 def toggle_active_links(pathname):
+    '''
+    this is the toggle function
+    '''
     if pathname == "/":
         # Treat page 1 as the homepage / index
         return True, False, False
-    return [pathname == f"/page-{page_name}" for page_name in page_names]
+    return [pathname == f"/page-{page_name}" for page_name in PAGENAMES]
 
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
+    '''
+    this is the render function
+    '''
     if pathname in ["/", "/page-simple-filtering"]:
         # return
         app_popularity_tab = display_popularity.main()
@@ -155,6 +161,9 @@ display_recomm.call_back_recom()
     [State("collapse", "is_open")],
 )
 def toggle_collapse(n, is_open):
+    '''
+    this is the toggle function
+    '''
     if n:
         return not is_open
     return is_open

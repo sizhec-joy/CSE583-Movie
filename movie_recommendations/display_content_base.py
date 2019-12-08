@@ -1,42 +1,42 @@
+import pickle
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-import numpy as np
 from content_based import ContentRecommendation
 from app import app
 import display_final_movie
 import global_record
 import grab_list
-import pickle
 
-num_movie_rate = 8
-num_final_recommend = 10
-test = True
 
-file = open('cp.txt','rb')
-cp = pickle.load(file)
+NUM_MOVIE_RATE = 8
+NUM_FINAL_RECOMMEND = 10
+TEST = True
+
+FILE = open('cp.txt', 'rb')
+CP = pickle.load(FILE)
 print('computing similarity')
-if test:
-    cp.generate_cosine_sim()
+if TEST:
+    CP.generate_cosine_sim()
 
-colors = {
+COLORS = {
     'background': '#111111',
     'text': '#000080'
 }
 
-ob = grab_list.read_csv()
-name_set = ob.name_set
-id_set = ob.id_set
-id_title_set = ob.id_title_set
-name_val = []
+OB = grab_list.read_csv()
+NAME_SET = OB.NAME_SET
+ID_SET = OB.ID_SET
+ID_TITLE_SET = OB.ID_TITLE_SET
+NAME_VAL = []
 count = 0
-for val in name_set:
+for val in NAME_SET:
     count = count + 1
     if count > grab_list.max_count:
         break
-    name_val.append({'label': val, 'value': val})
+    NAME_VAL.append({'label': val, 'value': val})
 #year_val = [{'label': 'All', 'value': 'All'}]
 #year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1970, 2017, 1)])
 #year_val = []
@@ -44,8 +44,8 @@ for val in name_set:
 
 
 def add_search_bar():
-    movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
-                                                         global_record.initial_movie_id_list[10:(10+num_final_recommend)]))
+    movie_div = display_final_movie.add_final_movies(zip(range(NUM_FINAL_RECOMMEND),
+                                                         global_record.initial_movie_id_list[10:(10+NUM_FINAL_RECOMMEND)]))
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a movie',
@@ -54,11 +54,10 @@ def add_search_bar():
                             'margin-bottom': '20px'}),
             html.Div(dcc.Dropdown(
                 id='movie_search_dropdown',
-                options=name_val,
+                options=NAME_VAL,
                 # multi=True,
                 placeholder="Please select/type a movie"),
-                style={'text-align': 'center',
-                       'font-size': '16px'})
+                     style={'text-align': 'center', 'font-size': '16px'})
         ]
     )
     app_filter_tab = html.Div(children=[])
@@ -93,20 +92,20 @@ def call_back_filter():
         if n_clicks is not None and n_clicks > 0:
             list_filter = str(list(input_value)[0])
             print(list_filter)
-            recommend = cp.get_recommended_movies(list_filter)
+            recommend = CP.get_recommended_movies(list_filter)
             #print(recommend)
             movie_names = recommend['title'].values.tolist()
             #print(movie_names)
             list_next_movie_id = []
             for mn in movie_names:
                 #print(mn)
-                #print(id_title_set[mn])
-                if mn in id_title_set:
-                    list_next_movie_id.append(int(id_title_set[mn]))
+                #print(ID_TITLE_SET[mn])
+                if mn in ID_TITLE_SET:
+                    list_next_movie_id.append(int(ID_TITLE_SET[mn]))
             #print(list_next_movie_id)
             ls = []
             for ids in list_next_movie_id:
-                if ids in id_set:
+                if ids in ID_SET:
                     ls.append(ids)
             #list_next_movie_id = [862 if r == 2000 else 2 for r in list_filter]
             list_next_movie_id = ls

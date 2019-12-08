@@ -1,3 +1,4 @@
+import pickle
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -9,99 +10,94 @@ from app import app
 import display_final_movie
 import global_record
 from simple_recommender import SimpleRecommendation
-import pickle
 
-file = open('sp.txt','rb')
-sp = pickle.load(file)
+FILE = open('sp.txt', 'rb')
+SP = pickle.load(FILE)
 
 
-num_movie_rate = 8
-num_final_recommend = 10
+NUM_FINAL_RECOMMEND = 10
 
-colors = {
+COLOR = {
     'background': '#111111',
     'text': '#000000'
 }
 
-filter_options = ['Genre', 'Year', 'Country', 'Director', 'Actors']
+FILTER_OPTIONS = ['Genre', 'Year', 'Country', 'Director', 'Actors']
 
-year_val = []
-year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1900, 2017, 1)])
+YEAR_VAL = []
+YEAR_VAL.extend([{'label': str(i), 'value': i} for i in np.arange(1900, 2017, 1)])
 
-obs = grab_list.read_csv()
-genre_set = obs.genre_set
-country_set = obs.country_set
-director_set = obs.director_set
-actor_set = obs.actor_set
-id_set = obs.id_set
-id_title_set = obs.id_title_set
+OBS = grab_list.read_csv()
+GENRE_SET = OBS.genre_set
+COUNTRY_SET = OBS.country_set
+DIRECTOR_SET = OBS.director_set
+ACTOR_SET = OBS.actor_set
+ID_SET = OBS.id_set
+ID_TITLE_SET = OBS.id_title_set
 #print(id_title_set)
 
-genre_val = []
-country_val = []
-director_val = []
-actor_val = []
-for val in genre_set:
-    genre_val.append({'label': val, 'value': val})
-for val in country_set:
-    country_val.append({'label': val, 'value': val})
-count = 0
-for val in director_set:
-    count = count + 1
-    if count > grab_list.max_count:
+GENRE_VAL = []
+COUNTRY_VAL = []
+DIRECTOR_VAL = []
+ACTOR_VAL = []
+for val in GENRE_SET:
+    GENRE_VAL.append({'label': val, 'value': val})
+for val in COUNTRY_SET:
+    COUNTRY_VAL.append({'label': val, 'value': val})
+COUNT = 0
+for val in DIRECTOR_SET:
+    COUNT = COUNT + 1
+    if COUNT > grab_list.max_count:
         break
-    director_val.append({'label': val, 'value': val})
-count = 0
-for val in actor_set:
-    count = count + 1
-    if count > grab_list.max_count:
+    DIRECTOR_VAL.append({'label': val, 'value': val})
+COUNT = 0
+for val in ACTOR_SET:
+    COUNT = COUNT + 1
+    if COUNT > grab_list.max_count:
         break
-    actor_val.append({'label': val, 'value': val})
+    ACTOR_VAL.append({'label': val, 'value': val})
 
 
-'''
-def set_genre_set(set):
-    genre_set = set
-    print(genre_set)
-'''
-def get_option(f):
-    if f == 'Genre':
-        return genre_val
-    elif f == 'Country':
-        return country_val
-    elif f == 'Director':
-        return director_val
-    elif f == 'Actors':
-        return actor_val
+def get_option(filter_option):
+    if filter_option == 'Genre':
+        return GENRE_VAL
+    elif filter_option == 'Country':
+        return COUNTRY_VAL
+    elif filter_option == 'Director':
+        return DIRECTOR_VAL
+    elif filter_option == 'Actors':
+        return ACTOR_VAL
     else:
-        return year_val
+        return YEAR_VAL
+
 
 def add_popularity_filter():
-    movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
-                                                         global_record.initial_movie_id_list[10:(10+num_final_recommend)]))
+    movie_div = display_final_movie.add_final_movies(
+        zip(range(NUM_FINAL_RECOMMEND),
+            global_record.initial_movie_id_list[10:(10 + NUM_FINAL_RECOMMEND)]))
     filter_drop_down = []
-    for f in filter_options:
+    for filter_option in FILTER_OPTIONS:
         filter_drop_down.append(html.Div(
             children=[
-                html.Div(str(f),
+                html.Div(str(filter_option),
                          style={'text-align': 'center',
                                 'font-size': '14px',
                                 'margin-bottom': '20px'}),
                 dcc.Dropdown(
-                    id=f,
-                    options=get_option(f),
+                    id=filter_option,
+                    options=get_option(filter_option),
                     value="All",
                     # multi=True,
                     style={'text-align': 'left',
                            'font-size': '12px'},
-                    placeholder="Select a " + str(f))],
+                    placeholder="Select a " + str(filter_option))],
             style={
                 'width': '15%',
                 'margin-left': '4%',
                 # 'padding-left': '10%',
                 # 'padding-right': '10%',
                 'display': 'inline-block',
-                'color': colors['text']}))
+                'color': COLOR['text']}))
 
     app_popularity_tab = html.Div(children=[])
     app_popularity_tab.children.append(html.Div(html.H1('Simple Filtering'),
@@ -121,17 +117,12 @@ def add_popularity_filter():
 
 
 def call_back_popularity_filter():
-    list_state = [State(f'{f}', 'value') for f in filter_options]
+    list_state = [State(f'{f}', 'value') for f in FILTER_OPTIONS]
     @app.callback(
         Output('popularity_main_div', 'children'),
         [Input('popularity_filter_button', 'n_clicks')],
         list_state)
     def update_multi_output(n_clicks, *input_value):
-        ctx = dash.callback_context
-        if not ctx.triggered:
-            user_click = 'No clicks yet'
-        else:
-            user_click = ctx.triggered[0]['prop_id'].split('.')[0]
         if n_clicks is not None and n_clicks > 0:
             list_filter = list(input_value)
             #print(list_filter)
@@ -140,26 +131,23 @@ def call_back_popularity_filter():
                 if list_filter[i] == "All":
                     list_filter[i] = None
             #print(list_filter)
-            recommend = sp.get_recommended_movies(list_filter)
+            recommend = SP.get_recommended_movies(list_filter)
             #print(recommend)
             movie_names = recommend['title'].values.tolist()
             #print(movie_names)
             list_next_movie_id = []
-            for mn in movie_names:
-                print(mn)
-                #print(id_title_set[mn])
-                if mn in id_title_set:
-                    list_next_movie_id.append(int(id_title_set[mn]))
+            for movie_name in movie_names:
+                if movie_name in ID_TITLE_SET:
+                    list_next_movie_id.append(int(ID_TITLE_SET[movie_name]))
             print(list_next_movie_id)
-            ls = []
+            list_movie_id = []
             for ids in list_next_movie_id:
-                if ids in id_set:
-                    ls.append(ids)
-            # TODO: call backend to filter here (param is a list: 'Genre', 'Year', 'Country', 'Director', 'Actors')
-            #list_next_movie_id = [862 if r == 2000 else 2 for r in list_filter]
-            list_next_movie_id = ls
-            #print(list_next_movie_id)
-            result = display_final_movie.add_final_movies(zip(range(len(list_next_movie_id)), list_next_movie_id))
+                if ids in ID_SET:
+                    list_movie_id.append(ids)
+            list_next_movie_id = list_movie_id
+            result = display_final_movie.add_final_movies(
+                zip(range(len(list_next_movie_id)),
+                    list_next_movie_id))
             return result
         else:
             raise PreventUpdate
