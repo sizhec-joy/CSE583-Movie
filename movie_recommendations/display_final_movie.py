@@ -18,7 +18,7 @@ def get_info(item_json):
              release_date, runtime, popularity, genres_div of the movie
     """
     name = item_json[get_movie_info.MovieJsonKeys.name]
-    poster = get_movie_info.poster_url_constant + item_json[get_movie_info.MovieJsonKeys.poster_url]
+    poster = get_movie_info.POSTER_URL_CONSTANT + item_json[get_movie_info.MovieJsonKeys.poster_url]
     overview = item_json[get_movie_info.MovieJsonKeys.overview]
     vote_average = item_json[get_movie_info.MovieJsonKeys.vote_average]
     list_genres = item_json[get_movie_info.MovieJsonKeys.genres]
