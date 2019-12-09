@@ -1,18 +1,19 @@
+"""
+This file initialize a dash app
+"""
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-external_stylesheets = [
+EXTERNAL_STYLESHEETS = [
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
     dbc.themes.BOOTSTRAP]
 
-app = dash.Dash(__name__,
-                external_stylesheets=external_stylesheets)
+APP = dash.Dash(__name__,
+                external_stylesheets=EXTERNAL_STYLESHEETS)
 
-server = app.server
-app.config['suppress_callback_exceptions'] = True
+SERVER = APP.server
+APP.config['suppress_callback_exceptions'] = True
 
-app.css.append_css({
+APP.css.append_css({
     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
 })

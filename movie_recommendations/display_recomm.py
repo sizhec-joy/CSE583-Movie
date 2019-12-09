@@ -10,7 +10,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import numpy as np
-from app import app
+from app import APP
 import global_record
 import grab_list
 import display_final_movie
@@ -42,8 +42,8 @@ def main():
     this is the main function
     '''
     movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
-                                                         global_record.initial_movie_id_list[10:(10+num_final_recommend)]))
-    global_record.set_curr_movie_id_list(global_record.initial_movie_id_list)
+                                                         global_record.INITIAL_MOVIE_ID_LIST[10:(10 + num_final_recommend)]))
+    global_record.set_curr_movie_id_list(global_record.INITIAL_MOVIE_ID_LIST)
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a user ID',
@@ -82,7 +82,7 @@ def call_back_recom():
     '''
     list_state = [State('user_id_dropdown', 'value')]
 
-    @app.callback(
+    @APP.callback(
         Output('recommend_main_div', 'children'),
         [Input('user_id_button', 'n_clicks')],
         list_state)

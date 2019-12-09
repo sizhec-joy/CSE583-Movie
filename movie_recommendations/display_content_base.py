@@ -5,7 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from content_based import ContentRecommendation
-from app import app
+from app import APP
 import display_final_movie
 import global_record
 import grab_list
@@ -45,7 +45,7 @@ for val in NAME_SET:
 
 def add_search_bar():
     movie_div = display_final_movie.add_final_movies(zip(range(NUM_FINAL_RECOMMEND),
-                                                         global_record.initial_movie_id_list[10:(10+NUM_FINAL_RECOMMEND)]))
+                                                         global_record.INITIAL_MOVIE_ID_LIST[10:(10 + NUM_FINAL_RECOMMEND)]))
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a movie',
@@ -79,7 +79,7 @@ def add_search_bar():
 
 def call_back_filter():
     list_state = [State('movie_search_dropdown', 'value')]
-    @app.callback(
+    @APP.callback(
         Output('content_base_main_div', 'children'),
         [Input('search_similar_button', 'n_clicks')],
         list_state)
