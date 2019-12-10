@@ -93,6 +93,8 @@ def get_countries(dataframe):
 def weighted_rating(dataframe, mean_value, quantile_value):
     """
     This function is to calculate weighted ratings
+    Input: A dataframe you want to calculate weighted ratings for, values of mean and quantile
+    Output: A list of weighted ratings
     """
     count_vote = dataframe['vote_count']
     average_vote = dataframe['vote_average']
@@ -137,6 +139,11 @@ class SimpleRecommendation:
         self.meta_data_new = self.meta_data_new.join(col_country)
 
     def get_recommended_movies(self, constraints, percentile=0.8):
+        '''
+        This function is to get 10 recommended movies
+        Input: A list of 5 filters [genre, year, country, director, actor]
+        Output: A dataframe of top 10 recommendations
+        '''
         constraint_names = ['genre', 'year', 'country', 'director', 'actor']
         data_frame = self.meta_data_new
         for i in range(len(constraints)):
