@@ -21,14 +21,11 @@ This project aims to recommend tailored movie information to users based on thei
 |   |   |   | source
 |   |   |   |   | collaborative_result.csv
 |   |   |   |   | cop.txt
-|   |   |   | credits.csv.zip
-|   |   |   | keywords.csv
-|   |   |   | links.csv
-|   |   |   | links_small.csv
 |   |   |   | movies_metadata.csv.zip
 |   |   |   | ratings.csv
+|   |   |   | ...
+|   |   | main_display.py
 |   |   | app.py
-|   |   | content_based.py
 |   |   | display_content_base.py
 |   |   | display_final_movie.py
 |   |   | display_popularity.py
@@ -36,14 +33,16 @@ This project aims to recommend tailored movie information to users based on thei
 |   |   | get_movie_info.py
 |   |   | global_record.py
 |   |   | grab_list.py
-|   |   | main_display.py
 |   |   | simple_recommender.py
+|   |   | content_based.py
 |   |   | userbased_filtering.py
 |   |   | test
 |   |   |   | test_recommendation.py
 |-- docs
 |   | Component Specification.md
 |   | Functional_specification.md
+|-- exmaple
+|   | example.md
 |-- LICENSE
 |-- README.md
 |-- setup.py
