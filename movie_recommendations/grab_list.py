@@ -1,6 +1,6 @@
-'''
-this is a function
-'''
+"""
+this is a helper function to grab all options for filters in simple filtering
+"""
 
 import csv
 import sys
@@ -34,9 +34,9 @@ if __name__ == "__main__":
 
 
 def process_genre(row):
-    '''
+    """
     this is a function to process genre
-    '''
+    """
     substring = row['genres']
     index = 100000
     if substring is None:
@@ -51,9 +51,9 @@ def process_genre(row):
 
 
 def process_name(row):
-    '''
+    """
     this is a function to process name
-    '''
+    """
     substring = row['title']
     if substring is None:
         return
@@ -62,18 +62,18 @@ def process_name(row):
 
 
 def process_id(row):
-    '''
+    """
     this is a function to process id
-    '''
+    """
     substring = row['id']
     if len(substring) > 0 and substring.isnumeric():
         id_set.add(int(substring))
 
 
 def process_title_id(row):
-    '''
+    """
     this is a function to process title and id
-    '''
+    """
     substring = row['id']
     substringg = row['title']
     if substring is None or substringg is None:
@@ -83,9 +83,9 @@ def process_title_id(row):
 
 
 def process_country(row):
-    '''
+    """
     this is a function to process country
-    '''
+    """
     substring = row['production_countries']
     if substring is None:
         return
@@ -100,9 +100,9 @@ def process_country(row):
 
 
 def process_director(row):
-    '''
+    """
     this is a function to process director
-    '''
+    """
     substring = row['crew']
     if substring is None:
         return
@@ -124,9 +124,9 @@ def process_director(row):
 
 
 def process_cast(row):
-    '''
+    """
     this is a function to process cast
-    '''
+    """
     substring = row['cast']
     if substring is None:
         return
@@ -152,18 +152,18 @@ def process_cast(row):
 
 
 def read_csv():
-    '''
+    """
     this is a function to read existing csv
-    '''
+    """
     file = open('meta.txt', 'rb')
     obs = pickle.load(file)
     return obs
 
 
 def read_csv_c():
-    '''
+    """
     this is a function to read credit.csv
-    '''
+    """
     with open('./movies-dataset/movies_metadata.csv', mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
@@ -181,9 +181,9 @@ def read_csv_c():
 
 
 class object_save:
-    '''
+    """
     this is a class to save file
-    '''
+    """
     def __init__(self, genre_set_o, country_set_o, director_set_o, actor_set_o, director_dic_o, actor_dic_o, name_set_o, id_set_o, id_title_set_o):
         self.country_set = sorted(country_set_o)
         self.genre_set = sorted(genre_set_o)
@@ -197,9 +197,9 @@ class object_save:
 
 
 def save_file():
-    '''
+    """
     this is a function to save file
-    '''
+    """
     obs = object_save(genre_set, country_set, director_set, actor_set, director_dic, actor_dic, name_set, id_set, id_title_set)
     file = open('meta.txt', 'wb')
     pickle.dump(obs, file)
@@ -207,9 +207,6 @@ def save_file():
 
 
 if Run:
-    '''
-    this is a function to run
-    '''
     read_csv_c()
     save_file()
 

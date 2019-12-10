@@ -1,3 +1,6 @@
+"""
+This displays the simple filtering page
+"""
 import pickle
 import dash
 import dash_core_components as dcc
@@ -34,7 +37,6 @@ DIRECTOR_SET = OBS.director_set
 ACTOR_SET = OBS.actor_set
 ID_SET = OBS.id_set
 ID_TITLE_SET = OBS.id_title_set
-#print(id_title_set)
 
 GENRE_VAL = []
 COUNTRY_VAL = []
@@ -59,6 +61,11 @@ for val in ACTOR_SET:
 
 
 def get_option(filter_option):
+    """
+    get a list of all options for one of Genre, Country, Director, Actor, Year
+    :param filter_option: one of Genre, Country, Director, Actor, Year
+    :return: a list of all options to be picked for this particular filter_option
+    """
     if filter_option == 'Genre':
         return GENRE_VAL
     elif filter_option == 'Country':
@@ -72,6 +79,10 @@ def get_option(filter_option):
 
 
 def add_popularity_filter():
+    """
+    :return: a html div with all content to be displayed for the simple filtering,
+             including, a div with drop down boxes, filter button, and movies with their info
+    """
     movie_div = display_final_movie.add_final_movies(
         zip(range(NUM_FINAL_RECOMMEND),
             global_record.INITIAL_MOVIE_ID_LIST[10:(10 + NUM_FINAL_RECOMMEND)]))
@@ -117,6 +128,10 @@ def add_popularity_filter():
 
 
 def call_back_popularity_filter():
+    """
+    A call back function for the filter button in the html div.
+    :return: a updated html div with after the filter button is clicked
+    """
     list_state = [State(f'{f}', 'value') for f in FILTER_OPTIONS]
     @APP.callback(
         Output('popularity_main_div', 'children'),

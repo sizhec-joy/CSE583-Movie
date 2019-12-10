@@ -1,3 +1,6 @@
+"""
+This displays the content-based filtering page
+"""
 import pickle
 import dash
 import dash_core_components as dcc
@@ -27,9 +30,9 @@ COLORS = {
 }
 
 OB = grab_list.read_csv()
-NAME_SET = OB.NAME_SET
-ID_SET = OB.ID_SET
-ID_TITLE_SET = OB.ID_TITLE_SET
+NAME_SET = OB.name_set
+ID_SET = OB.id_set
+ID_TITLE_SET = OB.id_title_set
 NAME_VAL = []
 count = 0
 for val in NAME_SET:
@@ -37,13 +40,13 @@ for val in NAME_SET:
     if count > grab_list.max_count:
         break
     NAME_VAL.append({'label': val, 'value': val})
-#year_val = [{'label': 'All', 'value': 'All'}]
-#year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1970, 2017, 1)])
-#year_val = []
-#year_val.extend([{'label': str(i), 'value': i} for i in np.arange(1900, 2017, 1)])
 
 
 def add_search_bar():
+    """
+    :return: a html div with all content to be displayed for the content-based filtering,
+             including, a div with drop down boxes, Find Similar Movies button, and movies with their info
+    """
     movie_div = display_final_movie.add_final_movies(zip(range(NUM_FINAL_RECOMMEND),
                                                          global_record.INITIAL_MOVIE_ID_LIST[10:(10 + NUM_FINAL_RECOMMEND)]))
     search_bar = html.Div(
@@ -78,6 +81,10 @@ def add_search_bar():
 
 
 def call_back_filter():
+    """
+    A call back function for the Find Similar Movies button in the html div.
+    :return: a updated html div with after the filter button is clicked
+    """
     list_state = [State('movie_search_dropdown', 'value')]
     @APP.callback(
         Output('content_base_main_div', 'children'),

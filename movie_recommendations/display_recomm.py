@@ -1,6 +1,6 @@
-'''
-this is a display module
-'''
+"""
+This displays the user-based filtering page
+"""
 from ast import literal_eval
 from collections import defaultdict
 import pandas as pd
@@ -19,9 +19,9 @@ COLORS = {
     'background': '#111111',
     'text': '#000080'
 }
-num_final_recommend = 10
+NUM_FINAL_RECOMMEND = 10
 COP = defaultdict(list)
-df = pd.read_csv('../movies-dataset/source/collaborative_result.csv',
+df = pd.read_csv('./movies-dataset/source/collaborative_result.csv',
                  header=None, index_col=0, converters={1: literal_eval})
 for row in df.iterrows():
     # print([item for item in row[1][0]])
@@ -38,12 +38,12 @@ user_val.extend([{'label': str(i), 'value': i} for i in np.arange(1, 467, 1)])
 
 
 def main():
-    '''
-    this is the main function
-    '''
-    movie_div = display_final_movie.add_final_movies(zip(range(num_final_recommend),
-                                                         global_record.INITIAL_MOVIE_ID_LIST[10:(10 + num_final_recommend)]))
-    global_record.set_curr_movie_id_list(global_record.INITIAL_MOVIE_ID_LIST)
+    """
+    :return: a html div with all content to be displayed for the user-based filtering,
+             including, a div with drop down boxes, find user button, and movies with their info
+    """
+    movie_div = display_final_movie.add_final_movies(zip(range(NUM_FINAL_RECOMMEND),
+                                                         global_record.INITIAL_MOVIE_ID_LIST[10:(10 + NUM_FINAL_RECOMMEND)]))
     search_bar = html.Div(
         children=[
             html.Div(children='Please type a user ID',
@@ -77,9 +77,10 @@ def main():
 
 
 def call_back_recom():
-    '''
-    this is the call back function
-    '''
+    """
+    A call back function for the find user button in the html div.
+    :return: a updated html div with after the filter button is clicked
+    """
     list_state = [State('user_id_dropdown', 'value')]
 
     @APP.callback(

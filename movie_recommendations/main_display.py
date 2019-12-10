@@ -1,19 +1,5 @@
 """
-This app creates a responsive sidebar layout with dash-bootstrap-components and
-some custom css with media queries.
-
-When the screen is small, the sidebar moved to the top of the page, and the
-links get hidden in a collapse element. We use a callback to toggle the
-collapse when on a small screen, and the custom CSS to hide the toggle, and
-force the collapse to stay open when the screen is large.
-
-dcc.Location is used to track the current location. There are two callbacks,
-one uses the current location to render the appropriate page content, the other
-uses the current location to toggle the "active" properties of the navigation
-links.
-
-For more details on building multi-page Dash applications, check out the Dash
-documentation: https://dash.plot.ly/urls
+Main display script of the movie recommender web interface
 """
 import dash
 import dash_core_components as dcc
@@ -114,9 +100,11 @@ PAGENAMES = ['simple-filtering', 'content-based-filtering', 'user-based-filterin
     [Input("url", "pathname")],
 )
 def toggle_active_links(pathname):
-    '''
-    this is the toggle function
-    '''
+    """
+    call back to display multiple pages with the first page being default
+    :param pathname: url of the pages
+    :return: a list of pathname of the pages
+    """
     if pathname == "/":
         # Treat page 1 as the homepage / index
         return True, False, False
@@ -125,9 +113,11 @@ def toggle_active_links(pathname):
 
 @APP.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
-    '''
-    this is the render function
-    '''
+    """
+    render each page
+    :param pathname: path of the page to be rendered
+    :return: the corresponding html div of the page to be displayed
+    """
     if pathname in ["/", "/page-simple-filtering"]:
         # return
         app_popularity_tab = display_popularity.main()
@@ -161,9 +151,9 @@ display_recomm.call_back_recom()
     [State("collapse", "is_open")],
 )
 def toggle_collapse(n, is_open):
-    '''
-    this is the toggle function
-    '''
+    """
+    collapse the side bar
+    """
     if n:
         return not is_open
     return is_open
