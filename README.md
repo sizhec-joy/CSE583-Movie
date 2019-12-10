@@ -88,5 +88,5 @@ Our dataset contains 5 main files:
 
 4.Run the url in your browser and get to the user's interface.
 
-#### For more detailed package demo, see [example](https://github.com/xiashuhan/CSE583project-Group9/tree/master/example)
+#### For more detailed package demo, see [example](https://github.com/xiashuhan/movie_recommendations/blob/master/example/Example.md)
 
