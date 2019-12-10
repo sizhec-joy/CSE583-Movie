@@ -82,7 +82,7 @@ Our dataset contains 5 main files:
 
 ```python3 setup.py install```
 
-3.**Unzip credits.csv.zip and movies_metadata.csv.zip files.** 
+**3.Unzip credits.csv.zip and movies_metadata.csv.zip files.** 
 
 4.Run main_display.py and obtain the url.
 
