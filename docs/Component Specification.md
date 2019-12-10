@@ -2,32 +2,36 @@
 
 #### **(a).Software components**
 
-- **Data manager:**
-  - **What it does:** Based on user’s input of different movie attributes (e.g. director, release year, language, etc.), filter out movies from the whole movie dataset.
-  - **Inputs it requires:** Pick movie attributes from Dropdown
-  - **Outputs it provides:** A subset of movies satisfying user picked attributes
-- **Prediction manager:** 
-  - **What it does:** Predicting rating and popularity of a movie based on input information
-  - **Inputs it requires:** Cast, country, crew, category, company, budget, runtime etc.
-  - **Outputs it provides:** Predicted rating and popularity of a movie based on input information. 
+- **Simple Filter:**
+  - **What it does:** get recommendation based on user’s input of different movie attributes
+  - **Inputs it requires:** 5 filters (genre/year/country/director/actor)
+  - **Outputs it provides:** A data frame of top 10 movies based on weighted ratings
+  
+- **Content-based Filter:** 
+  - **What it does:** get recommendation based on movie similarities
+  - **Inputs it requires:** a movie title
+  - **Outputs it provides:** A data frame of top 10 movies based on similarities to the given movie
+
+- **User based Filter:** 
+  - **What it does:** get recommendation based on user similarities
+  - **Inputs it requires:** a user id
+  - **Outputs it provides:** A data frame of top 10 movies based on similarities to the given user
 
 - **Visualization manager:** 
   -  **What it does:** Display information (i.e. poster, movie overview, average rating, etc.)  of filtered or recommended movies in a user interface. In the use case of prediction, it also displays rating/prediction results.
-  -  **Inputs it requires:** In the use case of prediction, the input is rating/prediction results.
+  -  **Inputs it requires:** In the use case of prediction, the input is a dataframe of recommendation results.
   -  **Outputs it provides:** ![img](https://lh3.googleusercontent.com/92ne2UboVFU89ka2z93iO7TIF2E2Jx9nYQ4pKzIyV29uliIwOFAjIu37NxRVmOl7q3Cnu_hKYWq8slQCoNj5F7bdjkTP3M1h8B8yqanD4WAbP8dArlCTWDqC6-fQrnXPz1WHDi1D)
 
 
 
 #### **(b).Interactions to accomplish use cases**
 
-- Use case of movie recommendation system:** Data manager analyzes user’s previous movie ratings and extracts a list of similar movies that would be recommended to this user. Then visualization manager display information on recommended movies to the user.		
-  - i.e. DATA MANAGER ——> VISUALIZATION MANAGER
-- **Use case of rating/popularity prediction:** Users input cast, country, crew, category, company, budget, runtime, etc movie information, prediction manager predicts the rating and popularity of a movie based on input information.		
-  - i.e. PREDICTION MANAGER ——> VISUALIZATION MANAGER
+- For the first use case, the simple filter is used. The user enters 5 filters, if the filter is not specified, it is None by default. The simple recommender will first get all movies satisfy the specific conditions. We use IMDB's weighted rating formula to calculate weighted ratings for movies. Then all we have to do is to sort selected movies based on weighted ratings and display the top 10 movies in the list. We get a data frame of 10 recommended movies from the simple recommender and pass it to visualization manager, which can display the names, posters and introductions of the movies.
 
-#### **(c).Preliminary plan**
+  - i.e. Simple Filter ——> Visualization Manager
+- For the second use case, a movie name entered by the user will be passed to the content-based filter. The filter will calculate the similarities between the given movie and all other movies. The measurement of similarity is the cosine distance based on movie cast, crew, keywords and genre. Then the content-based filter will generate a data frame of 10 movies with top similarities. Finally, the visualization manager will show the users the recommended movies based on content similarity with detailed information.		
+  - i.e. Content-based Filter ——> Visualization Manager
 
-- Complete data_manager.py to provide needed methods for data cleaning and preprocessing and return filtered and recommendation results based on movie attributes picked by users.
-- Complete prediction_manager.py to predict rating and popularity of a movie based on its basic information.
-- Complete visualization_manager.py to visualize selected data of movies with detailed descriptions (i.e. poster, movie overview, average rating, etc.).
+ - For the third use case, given a user id, the filter will first calculate the similarities between this user and all other users based on the movies they have already reviewed. Then it will predict the rating this user may give to a certain movie based on the user similarity and their ratings on the movie. Finally, a data frame of 10 movies with top predicted ratings will be passed to the visualization manager and the visualization manager will display these movies to the user.		
+  - i.e. User-based Filter ——> Visualization Manager
 
