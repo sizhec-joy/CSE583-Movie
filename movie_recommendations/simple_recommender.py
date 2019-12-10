@@ -105,8 +105,8 @@ class SimpleRecommendation:
     This is simple recommedation algorithm.
     '''
     def __init__(self):
-        meta_data = pd.read_csv('../movies-dataset/movies_metadata.csv')
-        credits = pd.read_csv('../movies-dataset/credits.csv')
+        meta_data = pd.read_csv('movies-dataset/movies_metadata.csv')
+        credits = pd.read_csv('movies-dataset/credits.csv')
         # drop some inappropriate records
         meta_data = meta_data[meta_data['release_date'].notnull()]
         meta_data = meta_data.drop([19730, 29503, 35587])
@@ -163,7 +163,7 @@ class SimpleRecommendation:
             if len(id_set) < 10:
                 if self.meta_data['id'].to_list():
                     id_set.append(id_num)
-        recommendation = self.meta_data[self.md['id'].isin(id_set)][['title', 'genres', 'year', 'countries', 'director', 'cast', 'vote_count', 'vote_average', 'popularity']]
+        recommendation = self.meta_data[self.meta_data['id'].isin(id_set)][['title', 'genres', 'year', 'countries', 'director', 'cast', 'vote_count', 'vote_average', 'popularity']]
         return recommendation
 
 if Run:

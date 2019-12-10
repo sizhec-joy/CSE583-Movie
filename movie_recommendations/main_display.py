@@ -6,7 +6,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
-import movie_recommendations.grab_list
+import grab_list
 from simple_recommender import SimpleRecommendation
 from content_based import ContentRecommendation
 from app import APP
@@ -78,7 +78,7 @@ SIDEBAR = html.Div(
             id="collapse",
         ),
     ],
-    id="SIDEBAR",
+    id="sidebar",
 )
 
 

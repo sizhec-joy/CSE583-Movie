@@ -21,7 +21,7 @@ COLORS = {
 }
 NUM_FINAL_RECOMMEND = 10
 COP = defaultdict(list)
-df = pd.read_csv('./movies-dataset/source/collaborative_result.csv',
+df = pd.read_csv('movies-dataset/source/collaborative_result.csv',
                  header=None, index_col=0, converters={1: literal_eval})
 for row in df.iterrows():
     # print([item for item in row[1][0]])
