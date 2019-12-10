@@ -58,9 +58,9 @@ This project aims to recommend tailored movie information to users based on thei
 
 ```python setup.py install```
 
- 3.Run main_display.py and obtain the url.
+  3.Run main_display.py and obtain the url.
 
- 4.Run the url in your browser and get to the user's interface.
+  4.Run the url in your browser and get to the user's interface.
 
 #### For more detailed package demo, see [example](https://github.com/xiashuhan/CSE583project-Group9/tree/master/example)
 
