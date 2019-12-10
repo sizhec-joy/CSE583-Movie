@@ -1,25 +1,25 @@
 # Movie Recommender System
 
-- **Contributors:** 
+#### Contributors:
   - Sizhe Chen
   - Yandi Jin
   - Miaoran Li
   - Shuhan Xia
   - Jing Xu
 
-#### About
+## About
 
 This project aims to recommend tailored movie information to users based on their needs.
 
-#### Background
+## Background
 
 The movie industry has witnessed its prosperity for the last two decades.There are new movies produced everyday and we now have more film choices than ever before. However, it also becomes hard to tell if one movie is better than the other. So we want to create a movie recommender system to help our users pick the right high-quality movie that’s in their favors.
 
-#### User profile
+## User profile
 
 Our system is designed for film lovers who have difficulty deciding which movie to watch. There is no technical prerequisite so that all potential users are able to navigate through the system.
 
-#### Data sources
+## Data sources
 
 Our dataset contains 5 main files:
 
@@ -74,17 +74,17 @@ Our dataset contains 5 main files:
 ```
 
 ## How to use
-1. Clone the repository.
+**1. Clone the repository.**
 
 ```git clone https://github.com/xiashuhan/CSE583project-Group9.git```
 
-2. Install the package.
+**2. Install the package.**
 
 ```python setup.py install```
 
-3.Run main_display.py and obtain the url.
+**3.Run main_display.py and obtain the url.**
 
-4.Run the url in your browser and get to the user's interface.
+**4.Run the url in your browser and get to the user's interface.**
 
 #### For more detailed package demo, see [example](https://github.com/xiashuhan/CSE583project-Group9/tree/master/example)
 
