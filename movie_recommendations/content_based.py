@@ -66,6 +66,8 @@ if Run:
 def get_director_name(x):
     '''
     Get director name
+    Input: a row of dataframe
+    Output: a string
     '''
     for i in x:
         if i['job'] == 'Director':
@@ -75,6 +77,8 @@ def get_director_name(x):
 def string_pre(x):
     '''
     Turn strings into lower case
+    Input: a string
+    Output: a lower case string
     '''
     return str.lower(x.replace(" ", ""))
 
@@ -98,6 +102,8 @@ if Run:
 def filter_keywords(x):
     '''
     Get unique keywords list
+    Input: a list
+    Output: a list without repeated word
     '''
     words = []
     for i in x:
