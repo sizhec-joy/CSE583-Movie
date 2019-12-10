@@ -1,8 +1,8 @@
 language: python
 
-# command to install dependencies
-install:
+before_script:
+    - easy_install distribute
     - pip install -r requirements.txt
-# command to run tests
+
 script:
-    - pytestnguage: python
+    - pytest
