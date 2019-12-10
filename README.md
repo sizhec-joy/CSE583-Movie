@@ -51,13 +51,9 @@ This project aims to recommend tailored movie information to users based on thei
 
 ## How to use
 1. Clone the repository.
-
 ```git clone https://github.com/xiashuhan/CSE583project-Group9.git```
-
 2. Install the package.
-
 ```python setup.py install```
-
 3.Run main_display.py and obtain the url.
 
 4.Run the url in your browser and get to the user's interface.
