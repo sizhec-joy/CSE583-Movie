@@ -84,11 +84,11 @@ Our dataset contains 5 main files:
 
 3. Unzip credits.csv.zip and movies_metadata.csv.zip files.
 
-4.Run main_display.py and obtain the url.
+4. Run main_display.py and obtain the url.
 
 ```python3 main_display.py```
 
-5.Run the url in your browser and get to the user's interface.
+5. Run the url in your browser and get to the user's interface.
 
 #### For more detailed package demo, see [example](https://github.com/xiashuhan/movie_recommendations/blob/master/example/Example.md)
 
