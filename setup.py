@@ -24,7 +24,7 @@ opts = dict(name='CSE583project-Group9',
                               'dash_html_components', 'http',
                               'json', 'nltk', 'numpy', 'pandas',
                               'pickle', 'sklearn', 'surprise'],
-            package_data={'Movie Recommendations': ['movies-dataset/*.*',
+            package_data={'movie_recommendations': ['movies-dataset/*.*',
                                                     'movies-dataset/source/*.*']}
             )
 
