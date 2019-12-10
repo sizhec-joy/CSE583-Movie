@@ -1,0 +1,2 @@
+### Case 1 - Simple Filtering
+Assume one of our users already has a few criterions in mind. For example, he would like to watch a 2016 animation produced in the United States, and he does not have any preference for director or actor/actress. In this case, the user only needs to select Genre as Animation, Year as 2016, and Country as United States of America from the dropdown lists, and leave the other boxes blank. Then he just hits Filter button, and the page will be updated with a list of recommended movies specific chosen for him.
