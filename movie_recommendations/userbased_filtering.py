@@ -30,7 +30,7 @@ def get_genre(dataframe):
     """
     This function is to get information about genres
     Input: dataframe
-    Output: list
+    Output: list of genres
     """
     genres = []
     for row_number in range(len(dataframe)):
@@ -44,7 +44,7 @@ def get_year(dataframe):
     """
     This function is to get information about years
     Input: dataframe
-    Output: list
+    Output: list of years
     """
     years = []
     for date in dataframe.release_date.to_list():
@@ -56,7 +56,7 @@ def get_countries(dataframe):
     This function is to get information about countries
     Full names of countries are adopted
     Input: dataframe
-    Output: list
+    Output: list of countries
     """
     countries = []
     for row_number in range(len(dataframe)):
@@ -83,6 +83,7 @@ if Run:
 
 def get_recommended_movies(user_id):
     '''
+    This function is to get top 10 recommended movies based on user similarities
     Input: user id (integer)
     Output: A dataframe contains 10 recommended movies (information about these movie included)
     '''
@@ -105,6 +106,8 @@ def get_recommended_movies(user_id):
 def save_recommendation_file():
     '''
     save recommendation result
+    Input: A dataframe of recommendation result
+    Output: A file
     '''
     dic = {'0': [0]}
     for i in range(467):
