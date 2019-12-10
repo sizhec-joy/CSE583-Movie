@@ -1,3 +1,0 @@
-### Case 2 - Content-based Filtering
-Suppose a user already watched a few movies, and decided those movies were exactly what he was looking for. For example, he really likes Avengers: Age of Ultron and would like to watch something similar. In this case, he only needs to type the name "Avengers: Age of Ultron" in the box, or if he could not remember the full name, he only needs to type some keywords and select the correct movie from the dropdown list. Then he can simply click on "Find Similar Movies" button, and the page will be updated with a list of movies similar to what he had liked.
-
