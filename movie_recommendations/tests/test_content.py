@@ -8,8 +8,7 @@ import movie_recommendations.content_based as content_recommender
 
 class TestContentRecommender(unittest.TestCase):
     """
-    Input: A list of 5 constraints, namely genre, year,
-    country, director, and actor.
+    Input: A movie title
     Output: A dataframe containing 10 recommended movies
     Should test if the output is adequate.
     """
