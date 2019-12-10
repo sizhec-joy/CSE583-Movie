@@ -27,11 +27,11 @@
 #### **(b).Interactions to accomplish use cases**
 
 - For the first use case, the simple filter is used. The user enters 5 filters, if the filter is not specified, it is None by default. The simple recommender will first get all movies satisfy the specific conditions. We use IMDB's weighted rating formula to calculate weighted ratings for movies. Then all we have to do is to sort selected movies based on weighted ratings and display the top 10 movies in the list. We get a data frame of 10 recommended movies from the simple recommender and pass it to visualization manager, which can display the names, posters and introductions of the movies.
-
   - i.e. Simple Filter ——> Visualization Manager
+  
 - For the second use case, a movie name entered by the user will be passed to the content-based filter. The filter will calculate the similarities between the given movie and all other movies. The measurement of similarity is the cosine distance based on movie cast, crew, keywords and genre. Then the content-based filter will generate a data frame of 10 movies with top similarities. Finally, the visualization manager will show the users the recommended movies based on content similarity with detailed information.		
   - i.e. Content-based Filter ——> Visualization Manager
 
- - For the third use case, given a user id, the filter will first calculate the similarities between this user and all other users based on the movies they have already reviewed. Then it will predict the rating this user may give to a certain movie based on the user similarity and their ratings on the movie. Finally, a data frame of 10 movies with top predicted ratings will be passed to the visualization manager and the visualization manager will display these movies to the user.		
+- For the third use case, given a user id, the filter will first calculate the similarities between this user and all other users based on the movies they have already reviewed. Then it will predict the rating this user may give to a certain movie based on the user similarity and their ratings on the movie. Finally, a data frame of 10 movies with top predicted ratings will be passed to the visualization manager and the visualization manager will display these movies to the user.		
   - i.e. User-based Filter ——> Visualization Manager
 
